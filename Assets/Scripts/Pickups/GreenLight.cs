@@ -1,7 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : Pickup
+public class GreenLight : Pickup
 {
+
 
     protected override void Start()
     {
@@ -12,10 +15,10 @@ public class Shield : Pickup
     {
         base.UsePickup();
 
-        player.isShielded = true;
+        player.isSpedUp = true;
 
-        if(cooldownTimer < 0)
-            player.isShielded = false;
+        if (cooldownTimer < 0)
+            player.isSpedUp = false;
     }
 
     protected override void OnTriggerEnter(Collider other)

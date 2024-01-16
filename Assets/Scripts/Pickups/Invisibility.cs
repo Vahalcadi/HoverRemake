@@ -1,8 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : Pickup
+public class Invisibility : Pickup
 {
-
     protected override void Start()
     {
         base.Start();
@@ -11,17 +12,12 @@ public class Shield : Pickup
     public override void UsePickup()
     {
         base.UsePickup();
-
-        player.isShielded = true;
-
-        if(cooldownTimer < 0)
-            player.isShielded = false;
+        player.invisibilityUses -= 1;
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-
-        CanUsePickup();
+        player.invisibilityUses -= 1;
     }
 }

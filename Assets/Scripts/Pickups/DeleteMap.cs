@@ -1,7 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : Pickup
+public class DeleteMap : Pickup
 {
+    public List<GameObject> partsOfMap;
 
     protected override void Start()
     {
@@ -12,10 +15,10 @@ public class Shield : Pickup
     {
         base.UsePickup();
 
-        player.isShielded = true;
-
-        if(cooldownTimer < 0)
-            player.isShielded = false;
+        foreach (var part in partsOfMap)
+        {
+            part.SetActive(false);
+        }
     }
 
     protected override void OnTriggerEnter(Collider other)
