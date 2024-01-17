@@ -6,7 +6,6 @@ public class Player : EntityHover
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
     [SerializeField] float maxForce;
-    [SerializeField] float rotationSpeed;
     public Vector2 accelDecel;
     public Vector2 rotation;
 
