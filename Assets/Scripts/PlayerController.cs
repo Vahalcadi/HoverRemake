@@ -1,24 +1,21 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
     [SerializeField] float maxForce;
     [SerializeField] float rotationSpeed;
-    Vector2 accelDecel;
-    Vector2 rotation;
+    public Vector2 accelDecel;
+    public Vector2 rotation;
 
-    public void GetAccelDecel(InputAction.CallbackContext context)
-    {
-        accelDecel = context.ReadValue<Vector2>();
-    }
+    private InputManager inputManager;
+    private Transform cameraTransform;
 
-    public void GetRotation(InputAction.CallbackContext context)
+    private void Start()
     {
-        rotation = context.ReadValue<Vector2>();
+        inputManager = InputManager.Instance;
+        cameraTransform = Camera.main.transform;
     }
 
     private void FixedUpdate()
@@ -30,8 +27,10 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         //Find target velocity
+        accelDecel = inputManager.GetAccelDecel();
         Vector3 currentVelocity = rb.velocity;
         Vector3 targetVelocity = new Vector3(accelDecel.x, 0f, accelDecel.y);
+        targetVelocity = cameraTransform.forward * targetVelocity.z;
         targetVelocity *= speed;
         //Align direction
         targetVelocity = transform.TransformDirection(targetVelocity);
@@ -40,11 +39,12 @@ public class PlayerController : MonoBehaviour
         //Limit force
         Vector3.ClampMagnitude(velocityChange, maxForce);
         rb.AddForce(velocityChange);
+
+        //controller.Move(velocityChange);
     }
 
     void Rotate()
     {
-        rotation *= rotationSpeed * Time.deltaTime;
-        transform.Rotate(0f, rotation.x, 0f);
+        rotation = inputManager.GetRotation();
     }
 }
