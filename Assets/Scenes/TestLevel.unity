@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7851d97ed9321a241ae1e596610f43bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1457500857}
+  player: {fileID: 1457500857}
   horizontalCameraSpeed: 90
 --- !u!114 &589883575
 MonoBehaviour:
@@ -795,6 +795,12 @@ MonoBehaviour:
   rotationSpeed: 6.9
   accelDecel: {x: 0, y: 0}
   rotation: {x: 0, y: 0}
+  isShielded: 0
+  isSpedUp: 0
+  invisibilityUses: 0
+  jumpUses: 0
+  isSlowedDown: 0
+  wallUses: 0
 --- !u!1 &1524288783
 GameObject:
   m_ObjectHideFlags: 0

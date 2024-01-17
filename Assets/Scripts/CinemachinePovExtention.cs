@@ -3,7 +3,7 @@ using Cinemachine;
 public class CinemachinePovExtention : CinemachineExtension
 {
 
-    [SerializeField] private PlayerController controller;
+    [SerializeField] private Player player;
     [SerializeField] private float horizontalCameraSpeed = 10;
     private Vector3 initialRotation;
 
@@ -19,7 +19,7 @@ public class CinemachinePovExtention : CinemachineExtension
         {
             if (stage == CinemachineCore.Stage.Aim)
             {
-                Vector2 lateralInputs = controller.rotation;
+                Vector2 lateralInputs = player.rotation;
                 initialRotation.x += lateralInputs.x * horizontalCameraSpeed * Time.deltaTime;
                 state.RawOrientation = Quaternion.Euler(0,initialRotation.x,0);
             }
