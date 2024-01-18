@@ -26,7 +26,10 @@ public class InputManager : MonoBehaviour
         return playerControls.Player.Rotation.ReadValue<Vector2>();
     }
 
-
+    public bool GetJump()
+    {
+        return playerControls.Player.Jump.triggered;
+    }
 
     private void OnEnable()
     {
