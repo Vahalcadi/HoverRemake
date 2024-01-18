@@ -11,14 +11,29 @@ public class GreenLight : Pickup
         base.Start();
     }
 
-    public override void UsePickup()
+    protected override void Update()
     {
-        base.UsePickup();
-
-        player.isSpedUp = true;
+        base.Update();
 
         if (cooldownTimer < 0)
             player.isSpedUp = false;
+    }
+
+    public override bool CanUsePickup()
+    {
+        return base.CanUsePickup();
+    }
+
+    public override void UsePickup()
+    {
+        Debug.Log("contact");
+        Debug.Log(cooldown);
+        Debug.Log(cooldownTimer);
+
+        base.UsePickup();
+
+        player.isSpedUp = true;
+        
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -26,5 +41,6 @@ public class GreenLight : Pickup
         base.OnTriggerEnter(other);
 
         CanUsePickup();
+        
     }
 }

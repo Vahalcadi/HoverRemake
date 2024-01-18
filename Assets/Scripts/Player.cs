@@ -5,6 +5,7 @@ public class Player : EntityHover
     [Header("Movement region")]
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
+    [SerializeField] float speedMultiplier;
     [SerializeField] float maxForce;
     [SerializeField] float jumpForce;
     public Vector2 accelDecel;
@@ -62,7 +63,12 @@ public class Player : EntityHover
         Vector3 currentVelocity = rb.velocity;
         Vector3 targetVelocity = new Vector3(accelDecel.x, 0f, accelDecel.y);
         targetVelocity = cameraTransform.forward * targetVelocity.z;
-        targetVelocity *= speed;
+
+        if(isSpedUp)
+            targetVelocity *= speed * speedMultiplier;
+        else
+            targetVelocity *= speed;
+
         //Align direction
         targetVelocity = transform.TransformDirection(targetVelocity);
         //Calculate forces
@@ -84,6 +90,7 @@ public class Player : EntityHover
             jumpUses--;
             
         }
+        
         
     }
 

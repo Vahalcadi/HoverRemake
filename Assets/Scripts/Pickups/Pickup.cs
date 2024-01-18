@@ -54,10 +54,4 @@ public class Pickup : MonoBehaviour
             return;
     }
 
-    protected virtual void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag != "player")
-            return;
-    }
-
 }
