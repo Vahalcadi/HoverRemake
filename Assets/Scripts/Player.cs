@@ -6,8 +6,14 @@ public class Player : EntityHover
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
     [SerializeField] float maxForce;
+    [SerializeField] float jumpForce;
     public Vector2 accelDecel;
     public Vector2 rotation;
+
+    [Header("Collision info")]
+    [SerializeField] protected Transform groundCheck;
+    [SerializeField] protected float groundCheckDistance = 1;
+    [SerializeField] protected LayerMask whatIsGround;
 
     [Header("Pickup reference region")]
     public bool isShielded;
@@ -37,10 +43,16 @@ public class Player : EntityHover
         cameraTransform = Camera.main.transform;
     }
 
+    private void Update()
+    {
+        Jump();
+    }
+
     private void FixedUpdate()
     {
         Move();
         Rotate();
+        
     }
 
     void Move()
@@ -62,8 +74,28 @@ public class Player : EntityHover
         //controller.Move(velocityChange);
     }
 
+    void Jump()
+    {
+
+        if (inputManager.GetJump() && IsGroundDetected() && jumpUses > 0)
+        {
+            
+            rb.AddForce(rb.velocity + Vector3.up * jumpForce, ForceMode.VelocityChange);
+            jumpUses--;
+            
+        }
+        
+    }
+
     void Rotate()
     {
         rotation = inputManager.GetRotation();
+    }
+
+    public bool IsGroundDetected() => Physics.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance, groundCheck.position.z));
     }
 }

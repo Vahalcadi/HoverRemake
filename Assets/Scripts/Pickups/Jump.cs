@@ -9,13 +9,6 @@ public class Jump : Pickup
         base.Start();
     }
 
-    public override void UsePickup()
-    {
-        base.UsePickup();
-
-        player.jumpUses -= 1; 
-    }
-
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
