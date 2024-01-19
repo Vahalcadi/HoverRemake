@@ -5,9 +5,12 @@ public class NavigationBumper : MonoBehaviour
 {
     [SerializeField] Transform player;
     [SerializeField] NavMeshAgent agentBumper;
+    [SerializeField] Player playerObject;
 
     private void Update()
     {
-        agentBumper.destination = player.position;
+        if (playerObject.isInvisible == false)
+            agentBumper.destination = player.position;
+        else return;
     }
 }

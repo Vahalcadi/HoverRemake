@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RedLight : Pickup
@@ -9,14 +7,23 @@ public class RedLight : Pickup
         base.Start();
     }
 
-    public override void UsePickup()
+    protected override void Update()
     {
-        base.UsePickup();
-
-        player.isSlowedDown = true;
+        base.Update();
 
         if (cooldownTimer < 0)
             player.isSlowedDown = false;
+    }
+
+    public override void UsePickup()
+    {
+        Debug.Log("contact");
+        Debug.Log(cooldown);
+        Debug.Log(cooldownTimer);
+
+        base.UsePickup();
+
+        player.isSlowedDown = true;
     }
 
     protected override void OnTriggerEnter(Collider other)

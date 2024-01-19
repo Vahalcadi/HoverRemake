@@ -31,6 +31,16 @@ public class InputManager : MonoBehaviour
         return playerControls.Player.Jump.triggered;
     }
 
+    public bool GetPlaceWall()
+    {
+        return playerControls.Player.PlaceWall.triggered;
+    }
+
+    public bool GetInvisibility()
+    {
+        return playerControls.Player.Invisibility.triggered;
+    }
+
     private void OnEnable()
     {
         playerControls.Enable();
