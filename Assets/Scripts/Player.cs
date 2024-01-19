@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
     [SerializeField] float speedMultiplier;
+    [SerializeField] float slowMultiplier;
     [SerializeField] float maxForce;
     [SerializeField] float jumpForce;
     public Vector2 accelDecel;
@@ -73,6 +74,8 @@ public class Player : MonoBehaviour
         //checking is player has an active speed buff (GreenLight) and assigning velocity accordingly
         if(isSpedUp)
             targetVelocity *= speed * speedMultiplier;
+        else if(isSlowedDown)
+            targetVelocity *= speed * slowMultiplier;
         else
             targetVelocity *= speed;
 
