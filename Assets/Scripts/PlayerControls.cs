@@ -53,6 +53,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlaceWall"",
+                    ""type"": ""Button"",
+                    ""id"": ""c7c4cc01-3cf2-4abf-ba48-60ca03285c98"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Invisibility"",
+                    ""type"": ""Button"",
+                    ""id"": ""d3acb218-88f3-4331-9e86-dc45ea4230cf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +150,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8a9481c-bbdc-4b79-8fb9-2712a45e94c8"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlaceWall"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b960996f-c61e-43a4-9929-a9220c8891bf"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Invisibility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +183,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_AccelerationDeceleration = m_Player.FindAction("AccelerationDeceleration", throwIfNotFound: true);
         m_Player_Rotation = m_Player.FindAction("Rotation", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_PlaceWall = m_Player.FindAction("PlaceWall", throwIfNotFound: true);
+        m_Player_Invisibility = m_Player.FindAction("Invisibility", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +249,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_AccelerationDeceleration;
     private readonly InputAction m_Player_Rotation;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_PlaceWall;
+    private readonly InputAction m_Player_Invisibility;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -214,6 +258,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @AccelerationDeceleration => m_Wrapper.m_Player_AccelerationDeceleration;
         public InputAction @Rotation => m_Wrapper.m_Player_Rotation;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @PlaceWall => m_Wrapper.m_Player_PlaceWall;
+        public InputAction @Invisibility => m_Wrapper.m_Player_Invisibility;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +278,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @PlaceWall.started += instance.OnPlaceWall;
+            @PlaceWall.performed += instance.OnPlaceWall;
+            @PlaceWall.canceled += instance.OnPlaceWall;
+            @Invisibility.started += instance.OnInvisibility;
+            @Invisibility.performed += instance.OnInvisibility;
+            @Invisibility.canceled += instance.OnInvisibility;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -245,6 +297,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @PlaceWall.started -= instance.OnPlaceWall;
+            @PlaceWall.performed -= instance.OnPlaceWall;
+            @PlaceWall.canceled -= instance.OnPlaceWall;
+            @Invisibility.started -= instance.OnInvisibility;
+            @Invisibility.performed -= instance.OnInvisibility;
+            @Invisibility.canceled -= instance.OnInvisibility;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -267,5 +325,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnAccelerationDeceleration(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnPlaceWall(InputAction.CallbackContext context);
+        void OnInvisibility(InputAction.CallbackContext context);
     }
 }

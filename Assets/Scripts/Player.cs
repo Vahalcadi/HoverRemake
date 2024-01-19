@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     public int jumpUses;
     public bool isSlowedDown;
     public int wallUses;
+    public GameObject wallPrefab;
 
     private InputManager inputManager;
     private Transform cameraTransform;
@@ -48,13 +49,14 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Jump();
+        PlaceWall();
     }
 
     private void FixedUpdate()
     {
         Move();
         Rotate();
-        
+
     }
 
     void Move()
@@ -72,9 +74,9 @@ public class Player : MonoBehaviour
         targetVelocity = cameraTransform.forward * targetVelocity.z;
 
         //checking is player has an active speed buff (GreenLight) and assigning velocity accordingly
-        if(isSpedUp)
+        if (isSpedUp)
             targetVelocity *= speed * speedMultiplier;
-        else if(isSlowedDown)
+        else if (isSlowedDown)
             targetVelocity *= speed * slowMultiplier;
         else
             targetVelocity *= speed;
@@ -90,7 +92,6 @@ public class Player : MonoBehaviour
 
         //Move player
         rb.AddForce(velocityChange);
-
     }
 
     void Jump()
@@ -107,13 +108,28 @@ public class Player : MonoBehaviour
 
         if (inputManager.GetJump() && IsGroundDetected() && jumpUses > 0)
         {
-            
+            Debug.Log("JUMPED");
             rb.AddForce(rb.velocity + Vector3.up * jumpForce, ForceMode.VelocityChange);
             jumpUses--;
-            
+
         }
-        
-        
+    }
+
+    void PlaceWall()
+    {
+        if (inputManager.GetPlaceWall() && wallUses > 0)
+        {
+            Debug.Log("WALL PLACED");
+            Instantiate(wallPrefab, transform.position, cameraTransform.rotation);
+        }
+    }
+
+    void Invisibility()
+    {
+        if (inputManager.GetInvisibility() && invisibilityUses > 0)
+        {
+
+        }
     }
 
 

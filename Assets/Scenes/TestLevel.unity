@@ -1456,7 +1456,9 @@ MonoBehaviour:
   invisibilityUses: 0
   jumpUses: 0
   isSlowedDown: 0
-  wallUses: 0
+  wallUses: 4
+  wallPrefab: {fileID: 4464130438781865524, guid: b7cef43f3397e6445a5fb13f9a3861e5,
+    type: 3}
 --- !u!1 &1524288783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,7 +1629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1781917837
 BoxCollider:
   m_ObjectHideFlags: 0
