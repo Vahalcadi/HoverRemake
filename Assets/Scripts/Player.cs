@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     public bool isShielded;
     public bool isSpedUp;
     public int invisibilityUses;
+    public bool isInvisible;
     public int jumpUses;
     public bool isSlowedDown;
     public int wallUses;
@@ -120,7 +121,11 @@ public class Player : MonoBehaviour
         if (inputManager.GetPlaceWall() && wallUses > 0)
         {
             Debug.Log("WALL PLACED");
-            Instantiate(wallPrefab, transform.position, cameraTransform.rotation);
+            Quaternion a = cameraTransform.rotation;
+            a *= Quaternion.AngleAxis(90f, Vector3.up);
+            Vector3 spawnPosition = new Vector3(cameraTransform.position.x, cameraTransform.position.y, cameraTransform.position.z + 1);
+            Instantiate(wallPrefab, spawnPosition, a);
+            wallUses--;
         }
     }
 
