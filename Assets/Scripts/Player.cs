@@ -6,6 +6,7 @@ public class Player : EntityHover
     [SerializeField] Rigidbody rb;
     [SerializeField] float speed;
     [SerializeField] float speedMultiplier;
+    [SerializeField] float slowMultiplier;
     [SerializeField] float maxForce;
     [SerializeField] float jumpForce;
     public Vector2 accelDecel;
@@ -53,7 +54,7 @@ public class Player : EntityHover
     {
         Move();
         Rotate();
-        
+
     }
 
     void Move()
@@ -64,8 +65,10 @@ public class Player : EntityHover
         Vector3 targetVelocity = new Vector3(accelDecel.x, 0f, accelDecel.y);
         targetVelocity = cameraTransform.forward * targetVelocity.z;
 
-        if(isSpedUp)
+        if (isSpedUp)
             targetVelocity *= speed * speedMultiplier;
+        else if (isSlowedDown)
+            targetVelocity *= speed * slowMultiplier;
         else
             targetVelocity *= speed;
 
@@ -85,13 +88,13 @@ public class Player : EntityHover
 
         if (inputManager.GetJump() && IsGroundDetected() && jumpUses > 0)
         {
-            
+
             rb.AddForce(rb.velocity + Vector3.up * jumpForce, ForceMode.VelocityChange);
             jumpUses--;
-            
+
         }
-        
-        
+
+
     }
 
     void Rotate()
