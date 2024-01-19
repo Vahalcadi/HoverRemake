@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : EntityHover
+public class Player : MonoBehaviour
 {
     [Header("Movement region")]
     [SerializeField] Rigidbody rb;
@@ -58,12 +58,19 @@ public class Player : EntityHover
 
     void Move()
     {
-        //Find target velocity
+        //Get value of x and y from input using Input Action component
         accelDecel = inputManager.GetAccelDecel();
+
+        //Assign default velocity to a vector3 variable
         Vector3 currentVelocity = rb.velocity;
+
+        //Assign registered x and y input to a vector3 variable
         Vector3 targetVelocity = new Vector3(accelDecel.x, 0f, accelDecel.y);
+
+        //Bounding forward movement to camera direction
         targetVelocity = cameraTransform.forward * targetVelocity.z;
 
+        //checking is player has an active speed buff (GreenLight) and assigning velocity accordingly
         if(isSpedUp)
             targetVelocity *= speed * speedMultiplier;
         else
@@ -71,17 +78,29 @@ public class Player : EntityHover
 
         //Align direction
         targetVelocity = transform.TransformDirection(targetVelocity);
+
         //Calculate forces
         Vector3 velocityChange = (targetVelocity - currentVelocity);
+
         //Limit force
         Vector3.ClampMagnitude(velocityChange, maxForce);
+
+        //Move player
         rb.AddForce(velocityChange);
 
-        //controller.Move(velocityChange);
     }
 
     void Jump()
     {
+        /**
+         * 
+         * GetJump() function returns true if the button bound to jump is pressed
+         * IsGroundDetected() fuction returns true when the raycast line, that starts from player, touches the ground
+         * jumpUses is a class variable that increments when the player picks up a jump pickup
+         * 
+         * 
+         * if all the contions are met, vertical movement is finalised and jumpUses is decreased
+         * **/
 
         if (inputManager.GetJump() && IsGroundDetected() && jumpUses > 0)
         {
@@ -94,13 +113,34 @@ public class Player : EntityHover
         
     }
 
+
+    /**
+     * 
+     * Sets a vector2 variable to the value of x and y registered from the Input Agent
+     *
+     * The vector2 variable "rotation" is used in the CinemachinePovExtention script to 
+     * move the camera horizontaly
+     * 
+     * **/
     void Rotate()
     {
         rotation = inputManager.GetRotation();
     }
 
+
+    /**
+     * 
+     * Raycast to check if the player is touching the ground
+     * 
+     * **/
     public bool IsGroundDetected() => Physics.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
 
+
+    /**
+     * 
+     * Visually represents the IsGroundDetected() raycast
+     * 
+     * **/
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance, groundCheck.position.z));
