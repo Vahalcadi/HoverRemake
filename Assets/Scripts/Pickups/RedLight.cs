@@ -15,11 +15,6 @@ public class RedLight : Pickup
             player.isSlowedDown = false;
     }
 
-    public override bool CanUsePickup()
-    {
-        return base.CanUsePickup();
-    }
-
     public override void UsePickup()
     {
         Debug.Log("contact");
@@ -29,7 +24,6 @@ public class RedLight : Pickup
         base.UsePickup();
 
         player.isSlowedDown = true;
-
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -37,6 +31,5 @@ public class RedLight : Pickup
         base.OnTriggerEnter(other);
 
         CanUsePickup();
-
     }
 }
