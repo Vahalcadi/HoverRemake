@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Invisibility : Pickup
@@ -8,16 +6,18 @@ public class Invisibility : Pickup
     {
         base.Start();
     }
-
-    public override void UsePickup()
+    public override bool CanUsePickup()
     {
-        base.UsePickup();
-        player.invisibilityUses -= 1;
+        player.invisibilityUses += 1;
+        Debug.Log("Invis picked up");
+
+        return true;
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        player.invisibilityUses -= 1;
+
+        CanUsePickup();
     }
 }

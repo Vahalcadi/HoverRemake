@@ -11,15 +11,13 @@ public class RedLight : Pickup
     {
         base.Update();
 
-        if (cooldownTimer < 0)
+        if (durationTimer < 0)
             player.isSlowedDown = false;
     }
 
     public override void UsePickup()
     {
-        Debug.Log("contact");
-        Debug.Log(cooldown);
-        Debug.Log(cooldownTimer);
+        Debug.Log("RedLight picked up");
 
         base.UsePickup();
 

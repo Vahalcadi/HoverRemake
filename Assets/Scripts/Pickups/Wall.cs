@@ -7,23 +7,21 @@ public class Wall : Pickup
         base.Start();
     }
 
-    protected override void Update()
+    public override bool CanUsePickup()
     {
-        base.Update();
+        player.wallUses += 1;
+        Debug.Log("Wall picked up");
 
-
-    }
-
-    public override void UsePickup()
-    {
-        base.UsePickup();
-        player.wallUses -= 1;
+        return true;
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        player.wallUses += 1;
+
+        
+
+        CanUsePickup();
     }
 
 

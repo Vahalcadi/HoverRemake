@@ -18,13 +18,24 @@ public class Player : MonoBehaviour
     [SerializeField] protected float groundCheckDistance = 1;
     [SerializeField] protected LayerMask whatIsGround;
 
-    [Header("Pickup reference region")]
+    [Header("Shield reference region")]
     public bool isShielded;
+
+    [Header("Speed up reference region")]
     public bool isSpedUp;
+
+    [Header("Invisibility reference region")]
     public int invisibilityUses;
     public bool isInvisible;
+    public float invisibilityDuration;
+
+    [Header("Jump reference region")]
     public int jumpUses;
+
+    [Header("Slow down reference region")]
     public bool isSlowedDown;
+
+    [Header("Wall reference region")]
     public int wallUses;
     public GameObject wallPrefab;
 
@@ -122,11 +133,19 @@ public class Player : MonoBehaviour
     {
         if (inputManager.GetPlaceWall() && wallUses > 0)
         {
+            /**
+             * 
+             * Places a wall behind the player
+             * 
+             * Quaternion wallRotation is used to adjust wall rotation when the game object is instantiated
+             * Vector3 spawnPosition saves the position to instantiate the wall
+             * 
+             * **/
             Debug.Log("WALL PLACED");
-            Quaternion a = cameraTransform.rotation;
-            a *= Quaternion.AngleAxis(90f, Vector3.up);
+            Quaternion wallRotation = cameraTransform.rotation;
+            wallRotation *= Quaternion.AngleAxis(90f, Vector3.up);
             Vector3 spawnPosition = new Vector3(cameraTransform.position.x, cameraTransform.position.y, cameraTransform.position.z + 1);
-            Instantiate(wallPrefab, spawnPosition, a);
+            Instantiate(wallPrefab, spawnPosition, wallRotation);
             wallUses--;
         }
     }
@@ -141,10 +160,19 @@ public class Player : MonoBehaviour
 
     IEnumerator TimeInvisible()
     {
+        /**
+         * 
+         * Sets isInvisible class variable to true, then reduces the number of uses
+         * The excecution of the coroutine is then suspended for some seconds before completing
+         * 
+         * While the coroutine is suspended, the EnemyBumper can't locate the player
+         * 
+         * **/
+
         Debug.Log("INVISIBILITY USED");
         isInvisible = true;
         invisibilityUses--;
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(invisibilityDuration);
         Debug.Log("INVISIBILITY ENDED");
         isInvisible = false;
     }
