@@ -30,6 +30,9 @@ public class RandomPickup : Pickup
 
     protected override void OnTriggerEnter(Collider other)
     {
+        if (!other.gameObject.CompareTag("Player"))
+            return;
+
         base.OnTriggerEnter(other);
 
         index = Random.Range(0, Pickups.Count);

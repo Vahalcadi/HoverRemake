@@ -50,7 +50,7 @@ public class Pickup : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag != "player")
+        if (!other.gameObject.CompareTag("Player"))
             return;
 
         CanUsePickup();

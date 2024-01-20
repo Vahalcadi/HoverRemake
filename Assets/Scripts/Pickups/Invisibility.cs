@@ -16,6 +16,9 @@ public class Invisibility : Pickup
 
     protected override void OnTriggerEnter(Collider other)
     {
+        if (!other.gameObject.CompareTag("Player"))
+            return;
+
         base.OnTriggerEnter(other);
 
         CanUsePickup();

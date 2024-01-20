@@ -17,9 +17,10 @@ public class Wall : Pickup
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
+        if (!other.gameObject.CompareTag("Player"))
+            return;
 
-        
+        base.OnTriggerEnter(other);
 
         CanUsePickup();
     }
