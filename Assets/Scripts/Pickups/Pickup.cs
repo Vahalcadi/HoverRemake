@@ -14,13 +14,13 @@ public class Pickup : MonoBehaviour
         GREEN_LIGHT,
         RED_LIGHT,
         DELETE_MAP,
-        MISTERY_OBJECT
+        RANDOM
     }
     public string pickupName;
     public PickupType type;
 
-    public float cooldown;
-    [NonSerialized] public float cooldownTimer;
+    public float effectDuration;
+    [NonSerialized] public float durationTimer;
 
     protected virtual void Start()
     {
@@ -29,15 +29,15 @@ public class Pickup : MonoBehaviour
 
     protected virtual void Update()
     {
-        cooldownTimer -= Time.deltaTime; 
+        durationTimer -= Time.deltaTime; 
     }
 
     public virtual bool CanUsePickup()
     {
-        if (cooldownTimer < 0)
+        if (durationTimer < 0)
         {
             UsePickup();
-            cooldownTimer = cooldown;
+            durationTimer = effectDuration;
             return true;
         }
 
@@ -52,6 +52,8 @@ public class Pickup : MonoBehaviour
     {
         if (other.gameObject.tag != "player")
             return;
+
+        CanUsePickup();
     }
 
 }

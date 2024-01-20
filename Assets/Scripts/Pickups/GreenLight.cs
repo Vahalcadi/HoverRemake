@@ -15,7 +15,7 @@ public class GreenLight : Pickup
     {
         base.Update();
 
-        if (cooldownTimer < 0)
+        if (durationTimer < 0)
             player.isSpedUp = false;
     }
 
@@ -26,9 +26,7 @@ public class GreenLight : Pickup
 
     public override void UsePickup()
     {
-        Debug.Log("contact");
-        Debug.Log(cooldown);
-        Debug.Log(cooldownTimer);
+        Debug.Log("GreenLight picked up");
 
         base.UsePickup();
 
@@ -38,6 +36,9 @@ public class GreenLight : Pickup
 
     protected override void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag != "player")
+            return;
+
         base.OnTriggerEnter(other);
 
         CanUsePickup();

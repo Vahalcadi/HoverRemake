@@ -9,11 +9,22 @@ public class Jump : Pickup
         base.Start();
     }
 
+    public override bool CanUsePickup()
+    {
+        player.jumpUses += 1;
+        Debug.Log("Jump picked up");
+
+        return true;
+    }
+
     protected override void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag != "player")
+            return;
+
         base.OnTriggerEnter(other);
 
-        player.jumpUses += 1;
+        CanUsePickup();
     }
 
 
