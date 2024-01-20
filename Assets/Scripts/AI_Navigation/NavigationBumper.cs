@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NavigationBumper : EntityHover
+public class NavigationBumper : MonoBehaviour
 {
     [SerializeField] Transform player;
     [SerializeField] NavMeshAgent agentBumper;
@@ -12,10 +12,5 @@ public class NavigationBumper : EntityHover
         if (playerObject.isInvisible == false)
             agentBumper.destination = player.position;
         else return;
-    }
-
-    protected override void OnCollisionEnter(Collision collision)
-    {
-        base.OnCollisionEnter(collision);
     }
 }

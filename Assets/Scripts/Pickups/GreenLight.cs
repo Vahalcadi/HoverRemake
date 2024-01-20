@@ -36,9 +36,6 @@ public class GreenLight : Pickup
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag != "player")
-            return;
-
         base.OnTriggerEnter(other);
 
         CanUsePickup();

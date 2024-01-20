@@ -5332,7 +5332,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1457500849}
-  m_Material: {fileID: 13400000, guid: b9659e71864dd9f478ad85e0a519c77d, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -6547,7 +6547,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781917836}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 590ed756e045dc6419205306a4b746fd, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -6559,7 +6559,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1, y: 1.1, z: 1.1}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1781917838
 MeshRenderer:
@@ -6650,7 +6650,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!114 &1781917842
@@ -6677,7 +6677,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1781917836}
   m_Enabled: 1
   m_AgentTypeID: -334000983
-  m_Radius: 0.5
+  m_Radius: 0.74
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
