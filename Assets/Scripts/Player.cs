@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour
     {
         Jump();
         PlaceWall();
+        Invisibility();
     }
 
     private void FixedUpdate()
@@ -131,10 +133,20 @@ public class Player : MonoBehaviour
 
     void Invisibility()
     {
-        if (inputManager.GetInvisibility() && invisibilityUses > 0)
+        if (inputManager.GetInvisibility() && invisibilityUses > 0 && isInvisible == false)
         {
-
+            StartCoroutine(TimeInvisible());
         }
+    }
+
+    IEnumerator TimeInvisible()
+    {
+        Debug.Log("INVISIBILITY USED");
+        isInvisible = true;
+        invisibilityUses--;
+        yield return new WaitForSeconds(10f);
+        Debug.Log("INVISIBILITY ENDED");
+        isInvisible = false;
     }
 
 
