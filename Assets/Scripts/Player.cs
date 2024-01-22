@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
 
     [Header("Wall reference region")]
     public int wallUses;
+    public float wallDuration;
     public GameObject wallPrefab;
 
     private InputManager inputManager;
@@ -133,21 +134,33 @@ public class Player : MonoBehaviour
     {
         if (inputManager.GetPlaceWall() && wallUses > 0)
         {
-            /**
-             * 
-             * Places a wall behind the player
-             * 
-             * Quaternion wallRotation is used to adjust wall rotation when the game object is instantiated
-             * Vector3 spawnPosition saves the position to instantiate the wall
-             * 
-             * **/
-            Debug.Log("WALL PLACED");
-            Quaternion wallRotation = cameraTransform.rotation;
-            wallRotation *= Quaternion.AngleAxis(90f, Vector3.up);
-            Vector3 spawnPosition = new Vector3(cameraTransform.position.x, cameraTransform.position.y, cameraTransform.position.z + 1);
-            Instantiate(wallPrefab, spawnPosition, wallRotation);
-            wallUses--;
+            StartCoroutine(TimeWall());
         }
+    }
+
+    IEnumerator TimeWall()
+    {
+        
+        /**
+        * 
+        * Places a wall behind the player
+        * 
+        * Quaternion wallRotation is used to adjust wall rotation when the game object is instantiated
+        * Vector3 spawnPosition saves the position to instantiate the wall
+        * 
+        * **/
+
+        Debug.Log("WALL PLACED");
+        Quaternion wallRotation = cameraTransform.rotation;
+        wallRotation *= Quaternion.AngleAxis(90f, Vector3.up);
+        Vector3 spawnPosition = new Vector3(cameraTransform.position.x, cameraTransform.position.y, cameraTransform.position.z - 1);
+        GameObject wall = Instantiate(wallPrefab, spawnPosition, wallRotation);
+        wallUses--;
+
+        yield return new WaitForSeconds(wallDuration);
+
+        Destroy(wall);
+        
     }
 
     void Invisibility()
