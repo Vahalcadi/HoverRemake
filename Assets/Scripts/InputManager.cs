@@ -41,12 +41,12 @@ public class InputManager : MonoBehaviour
         return playerControls.Player.Invisibility.triggered;
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         playerControls.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         playerControls.Disable();
     }

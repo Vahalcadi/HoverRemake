@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class NavigationBumper : EntityHover
 {
     [SerializeField] Transform player;
-    [SerializeField] NavMeshAgent agentBumper;
+    [SerializeField] public NavMeshAgent agentBumper;
     [SerializeField] Player playerObject;
 
     private void Update()

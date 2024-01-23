@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class NavigationFlagChaser : MonoBehaviour
 {
     [SerializeField] Transform flag;
-    [SerializeField] NavMeshAgent agentFlagChaser;
+    [SerializeField] public NavMeshAgent agentFlagChaser;
 
     private void Update()
     {
