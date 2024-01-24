@@ -4379,7 +4379,6 @@ GameObject:
   m_Component:
   - component: {fileID: 702268978}
   - component: {fileID: 702268981}
-  - component: {fileID: 702268980}
   - component: {fileID: 702268979}
   m_Layer: 0
   m_Name: MinimapCamera
@@ -4447,14 +4446,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!81 &702268980
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 702268977}
-  m_Enabled: 1
 --- !u!20 &702268981
 Camera:
   m_ObjectHideFlags: 0
@@ -12913,7 +12904,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2094691959}
   - component: {fileID: 2094691958}
-  - component: {fileID: 2094691957}
   - component: {fileID: 2094691956}
   - component: {fileID: 2094691960}
   m_Layer: 0
@@ -12967,14 +12957,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!81 &2094691957
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094691955}
-  m_Enabled: 1
 --- !u!20 &2094691958
 Camera:
   m_ObjectHideFlags: 0
