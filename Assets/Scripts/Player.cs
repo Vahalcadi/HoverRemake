@@ -18,6 +18,12 @@ public class Player : MonoBehaviour
     [SerializeField] protected float groundCheckDistance = 1;
     [SerializeField] protected LayerMask whatIsGround;
 
+    [Header("Climb Stairs info")]
+    [SerializeField] private GameObject stepRaycastUp;
+    [SerializeField] private GameObject stepRaycastLow;
+    [SerializeField] private float stepHeight;
+    [SerializeField] private float stepSnap;
+
     [Header("Shield reference region")]
     public bool isShielded;
 
@@ -52,6 +58,8 @@ public class Player : MonoBehaviour
             Destroy(Instance.gameObject);
         else
             Instance = this;
+
+        stepRaycastUp.transform.position = new Vector3(stepRaycastUp.transform.position.x, stepHeight, stepRaycastUp.transform.position.z);
     }
 
     private void Start()
@@ -71,6 +79,7 @@ public class Player : MonoBehaviour
     {
         Move();
         Rotate();
+        //ClimbStep();
 
     }
 
@@ -127,6 +136,20 @@ public class Player : MonoBehaviour
             rb.AddForce(rb.velocity + Vector3.up * jumpForce, ForceMode.VelocityChange);
             jumpUses--;
 
+        }
+    }
+
+    void ClimbStep()
+    {
+        RaycastHit hitLow;
+
+        if (Physics.Raycast(stepRaycastLow.transform.position, transform.TransformDirection(Vector3.forward), out hitLow, 0.1f))
+        {
+            RaycastHit hitUp;
+            if (!Physics.Raycast(stepRaycastUp.transform.position, transform.TransformDirection(Vector3.forward), out hitUp, 0.2f))
+            {
+                rb.position -= new Vector3(0, -stepSnap, 0);
+            }
         }
     }
 
