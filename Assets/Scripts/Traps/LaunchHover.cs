@@ -1,10 +1,11 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class HoldHover : Trap
+public class LaunchHover : Trap
 {
+
+    [SerializeField] private Transform arrivalPosition;
+    public float travelSpeed;
 
     protected override void Update()
     {
@@ -32,39 +33,25 @@ public class HoldHover : Trap
 
         if (other.gameObject.CompareTag("Player") && !player.GetComponent<Player>().isShielded)
         {
-
-            StartCoroutine(EnsnarePlayer());
+            StartCoroutine(LaunchPlayer());
         }
         else if (other.gameObject.CompareTag("EnemyBumper"))
         {
-            StartCoroutine(EnsnareEnemy(enemyBumper));
         }
         else if (other.gameObject.CompareTag("EnemyFlagChaser"))
         {
-            StartCoroutine(EnsnareEnemy(enemyFlagChaser));
         }
 
     }
 
-    private IEnumerator EnsnareEnemy(GameObject enemyHover)
-    {
-        enemyHover.GetComponent<NavMeshAgent>().enabled = false;
-        enemyHover.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
-        enemyHover.transform.position = gameObject.transform.position;
-
-        yield return new WaitForSeconds(trapDuration);
-
-        enemyHover.GetComponent<NavMeshAgent>().enabled = true;
-    }
-
-    private IEnumerator EnsnarePlayer()
+    private IEnumerator LaunchPlayer()
     {
         InputManager.Instance.OnDisable();
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        player.transform.position = gameObject.transform.position;
+        player.transform.position = Vector3.MoveTowards(player.transform.position, arrivalPosition.position, travelSpeed * Time.deltaTime);
         yield return new WaitForSeconds(trapDuration);
 
         InputManager.Instance.OnEnable();
     }
+
 }
