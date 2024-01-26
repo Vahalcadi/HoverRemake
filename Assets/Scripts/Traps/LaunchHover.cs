@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LaunchHover : Trap
 {
@@ -37,9 +38,11 @@ public class LaunchHover : Trap
         }
         else if (other.gameObject.CompareTag("EnemyBumper"))
         {
+            StartCoroutine(LaunchEnemy(enemyBumper));
         }
         else if (other.gameObject.CompareTag("EnemyFlagChaser"))
         {
+            StartCoroutine(LaunchEnemy(enemyFlagChaser));
         }
 
     }
@@ -54,4 +57,15 @@ public class LaunchHover : Trap
         InputManager.Instance.OnEnable();
     }
 
+    private IEnumerator LaunchEnemy(GameObject enemyHover)
+    {
+        enemyHover.GetComponent<NavMeshAgent>().enabled = false;
+        enemyHover.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        enemyHover.transform.position = Vector3.MoveTowards(enemyHover.transform.position, arrivalPosition.position, travelSpeed * Time.deltaTime);
+
+        yield return new WaitForSeconds(trapDuration);
+
+        enemyHover.GetComponent<NavMeshAgent>().enabled = true;
+    }
 }
