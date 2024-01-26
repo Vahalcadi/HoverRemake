@@ -139,7 +139,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void ClimbStep()
+    /*void ClimbStep()
     {
         RaycastHit hitLow;
 
@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
                 rb.position -= new Vector3(0, -stepSnap, 0);
             }
         }
-    }
+    }*/
 
     void PlaceWall()
     {
