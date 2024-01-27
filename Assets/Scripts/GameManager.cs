@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] Player player;
+    [SerializeField] NavigationFlagChaser flagChaser;
+    [SerializeField] TextMeshProUGUI scoreText;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (player.pickedUpFlags == 3)
+        {
+            Debug.Log($"You won. Score: {player.score}");
+            EditorApplication.isPlaying = false;
+        }
+        if (flagChaser.flagsLeft == 0)
+        {
+            Debug.Log($"You lost. Score: {player.score}");
+            EditorApplication.isPlaying = false;
+        }
+        player.score = player.pickedUpFlags * 900;
+        scoreText.text = player.score.ToString();
     }
 }

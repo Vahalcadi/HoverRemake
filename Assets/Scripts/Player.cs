@@ -46,6 +46,12 @@ public class Player : MonoBehaviour
     public float wallDuration;
     public GameObject wallPrefab;
 
+    [Header("Score reference region")]
+    public int score;
+
+    [Header("Flag reference region")]
+    public int pickedUpFlags;
+
     private InputManager inputManager;
     private Transform cameraTransform;
 
@@ -163,7 +169,7 @@ public class Player : MonoBehaviour
 
     IEnumerator TimeWall()
     {
-        
+
         /**
         * 
         * Places a wall behind the player
@@ -183,7 +189,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(wallDuration);
 
         Destroy(wall);
-        
+
     }
 
     void Invisibility()
@@ -244,5 +250,15 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance, groundCheck.position.z));
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Flag"))
+        {
+            other.gameObject.SetActive(false);
+            pickedUpFlags++;
+            Debug.Log("Flag picked up by player");
+        }
     }
 }

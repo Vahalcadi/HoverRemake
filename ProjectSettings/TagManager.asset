@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EnemyFlagChaser
   - EnemyBumper
+  - Flag
   layers:
   - Default
   - TransparentFX
