@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,13 +10,24 @@ public class UIManager : MonoBehaviour
     [Header("Enemy References")]
     [SerializeField] NavigationFlagChaser flagChaser;
 
-    [Header("Sprites References")]
+    [Header("Flag SpriteRenderers References")]
     [SerializeField] SpriteRenderer redFlag1;
     [SerializeField] SpriteRenderer redFlag2;
     [SerializeField] SpriteRenderer redFlag3;
     [SerializeField] SpriteRenderer blueFlag1;
     [SerializeField] SpriteRenderer blueFlag2;
     [SerializeField] SpriteRenderer blueFlag3;
+
+    [Header("Left Frame Images References")]
+    [SerializeField] Image jumpBar;
+    [SerializeField] Image wallBar;
+    [SerializeField] Image invisibilityBar;
+
+    [Header("Right Frame Images References")]
+    [SerializeField] Image accelerationBar;
+    [SerializeField] Image shieldBar;
+    [SerializeField] Image redLightBar;
+    [SerializeField] Image greenLightBar;
 
     [Header("Texts References")]
     [SerializeField] TextMeshProUGUI scoreText;
@@ -42,7 +54,18 @@ public class UIManager : MonoBehaviour
         invisibilityText.text = $"{player.invisibilityUses}";
         scoreText.text = player.score.ToString();
 
-        //activates/deactivates SpriteRenderer based on flags currently owned
+        //ability bars (need to figure out how to do calcs considering that fillAmount is a float with 0-1 value)
+        jumpBar.fillAmount = (player.transform.position.y - 0.5f) / 4;
+        /* for these we probaly need to add an actual timer each time an ability is used and update the fillAmount based on it
+        wallBar.fillAmount = 
+        invisibilityBar.fillAmount =
+        accelerationBar.fillAmount = player actual velocity
+        shieldBar.fillAmount =
+        redLightBar.fillAmount = 
+        greenLightBar.fillAmount = 
+        */
+
+        //activates/deactivates SpriteRenderer based on flags currently owned by player/enemy
         switch (player.pickedUpFlags)
         {
             case 0:
