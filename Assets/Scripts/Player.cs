@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
         else
             Instance = this;
 
-        stepRaycastUp.transform.position = new Vector3(stepRaycastUp.transform.position.x, stepHeight, stepRaycastUp.transform.position.z);
+        //stepRaycastUp.transform.position = new Vector3(stepRaycastUp.transform.position.x, stepHeight, stepRaycastUp.transform.position.z);
     }
 
     private void Start()
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
     {
         Move();
         Rotate();
-        ClimbStep();
+        //ClimbStep();
 
     }
 
@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void ClimbStep()
+    /*void ClimbStep()
     {
         RaycastHit hitLow;
 
@@ -157,7 +157,7 @@ public class Player : MonoBehaviour
                 rb.position -= new Vector3(0, -stepSnap, 0);
             }
         }
-    }
+    }*/
 
     void PlaceWall()
     {
