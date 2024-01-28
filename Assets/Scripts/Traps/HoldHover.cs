@@ -50,6 +50,7 @@ public class HoldHover : Trap
     {
         enemyHover.GetComponent<NavMeshAgent>().enabled = false;
         enemyHover.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        enemyHover.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         enemyHover.transform.position = gameObject.transform.position;
 
@@ -62,6 +63,7 @@ public class HoldHover : Trap
     {
         InputManager.Instance.OnDisable();
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         player.transform.position = gameObject.transform.position;
         yield return new WaitForSeconds(trapDuration);
 
