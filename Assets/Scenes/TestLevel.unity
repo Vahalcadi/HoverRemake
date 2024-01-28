@@ -5182,7 +5182,7 @@ GameObject:
   - component: {fileID: 97679888}
   m_Layer: 0
   m_Name: TestFlag (2)
-  m_TagString: Flag
+  m_TagString: EnemyFlag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33320,7 +33320,7 @@ GameObject:
   - component: {fileID: 719255525}
   m_Layer: 0
   m_Name: TestFlag (1)
-  m_TagString: Flag
+  m_TagString: EnemyFlag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64184,6 +64184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1457500856}
+  flagChaser: {fileID: 661514905}
   scoreText: {fileID: 1352247402}
   jumpText: {fileID: 1146968827}
   wallText: {fileID: 1157340261}
@@ -78961,7 +78962,7 @@ GameObject:
   - component: {fileID: 1799324196}
   m_Layer: 0
   m_Name: TestFlag
-  m_TagString: Flag
+  m_TagString: EnemyFlag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
