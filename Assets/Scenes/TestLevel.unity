@@ -42127,6 +42127,25 @@ MonoBehaviour:
   player: {fileID: 1457500856}
   flagChaser: {fileID: 661514905}
   scoreText: {fileID: 1352247402}
+  playerFlag: {fileID: 1056202065}
+  enemyFlag: {fileID: 0}
+  numberOfPlayerFlags: 3
+  numberOfEnemyFlags: 3
+  flagSpawnpoints:
+  - {fileID: 390187667}
+  - {fileID: 1863461482}
+  - {fileID: 6475640}
+  - {fileID: 1127467059}
+  - {fileID: 827932237}
+  - {fileID: 759712500}
+  - {fileID: 461049120}
+  - {fileID: 1050247229}
+  - {fileID: 1827544172}
+  - {fileID: 1116635498}
+  - {fileID: 1542444291}
+  - {fileID: 1636201592}
+  - {fileID: 462859036}
+  - {fileID: 268513059}
 --- !u!4 &915597129
 Transform:
   m_ObjectHideFlags: 0
@@ -42136,7 +42155,7 @@ Transform:
   m_GameObject: {fileID: 915597127}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -45.31881, y: -7.1940556, z: -29.680922}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

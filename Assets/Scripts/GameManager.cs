@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -12,12 +14,30 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerFlag;
     [SerializeField] private GameObject enemyFlag;
 
+    [NonSerialized] public List<GameObject> playerFlags = new();
+
     [SerializeField] private int numberOfPlayerFlags;
     [SerializeField] private int numberOfEnemyFlags;
 
-    [SerializeField] private List<GameObject> flagSpawnpoints;
-    private List<int> extractedSpawnpoints;
+    public List<GameObject> flagSpawnpoints;
+    [NonSerialized] public List<int> extractedSpawnpoints = new();
     private int random;
+
+    public static GameManager Instance;
+
+    private void Awake()
+    {
+        if (Instance != null)
+            Destroy(Instance.gameObject);
+        else
+            Instance = this;
+
+    }
+
+    private void Start()
+    {
+        InstantiatePlayerFlags();
+    }
 
     private void Update()
     {
@@ -38,16 +58,26 @@ public class GameManager : MonoBehaviour
 
     private void InstantiatePlayerFlags()
     {
-        for(int i = 0; i < numberOfPlayerFlags; i++)
+        for(int i = 0; i < numberOfPlayerFlags - player.pickedUpFlags; i++)
         {
             CheckExtractedNumber();
-            Instantiate(playerFlag, flagSpawnpoints[random].transform);
+            playerFlags.Add(Instantiate(playerFlag, flagSpawnpoints[random].transform));
         }
+    }
+
+    public void DestroyLastPlayerPickedUpFlag()
+    {
+        int playerFlagIndex = flagSpawnpoints.IndexOf(playerFlags.Last().transform.parent.gameObject);
+        extractedSpawnpoints.Remove(playerFlagIndex);
+
+        GameObject obj = playerFlags.Last();
+        Destroy(playerFlags.Last());
+        playerFlags.Remove(obj);
     }
 
     private void CheckExtractedNumber()
     {
-        random = Random.Range(0, flagSpawnpoints.Count);
+        random = UnityEngine.Random.Range(0, flagSpawnpoints.Count);
         if (extractedSpawnpoints.Contains(random))
         {
             CheckExtractedNumber();
