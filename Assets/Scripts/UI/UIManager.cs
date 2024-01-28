@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        //sets all the flags SpriteRenderer to false
         redFlag1.enabled = false;
         redFlag2.enabled = false;
         redFlag3.enabled = false;
@@ -35,22 +36,33 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        //texts are updated based on player ref
         jumpText.text = $"{player.jumpUses}";
         wallText.text = $"{player.wallUses}";
         invisibilityText.text = $"{player.invisibilityUses}";
         scoreText.text = player.score.ToString();
 
+        //activates/deactivates SpriteRenderer based on flags currently owned
         switch (player.pickedUpFlags)
         {
             case 0:
+                blueFlag1.enabled = false;
+                blueFlag2.enabled = false;
+                blueFlag3.enabled = false;
                 break;
             case 1:
                 blueFlag1.enabled = true;
+                blueFlag2.enabled = false;
+                blueFlag3.enabled = false;
                 break;
             case 2:
+                blueFlag1.enabled = true;
                 blueFlag2.enabled = true;
+                blueFlag3.enabled = false;
                 break;
             case 3:
+                blueFlag1.enabled = true;
+                blueFlag2.enabled = true;
                 blueFlag3.enabled = true;
                 break;
         }
@@ -58,15 +70,24 @@ public class UIManager : MonoBehaviour
         switch (flagChaser.flagsLeft)
         {
             case 3:
+                redFlag1.enabled = false;
+                redFlag2.enabled = false;
+                redFlag3.enabled = false;
                 break;
             case 2:
-                blueFlag1.enabled = true;
+                redFlag1.enabled = true;
+                redFlag2.enabled = false;
+                redFlag3.enabled = false;
                 break;
             case 1:
-                blueFlag2.enabled = true;
+                redFlag1.enabled = true;
+                redFlag2.enabled = true;
+                redFlag3.enabled = false;
                 break;
             case 0:
-                blueFlag3.enabled = true;
+                redFlag1.enabled = true;
+                redFlag2.enabled = true;
+                redFlag3.enabled = true;
                 break;
         }
     }
