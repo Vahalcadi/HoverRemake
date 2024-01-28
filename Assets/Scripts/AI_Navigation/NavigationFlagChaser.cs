@@ -14,7 +14,7 @@ public class NavigationFlagChaser : MonoBehaviour
 
     protected void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Flag"))
+        if (other.gameObject.CompareTag("PlayerFlag"))
         {
             other.gameObject.SetActive(false);
             flagsLeft--;

@@ -10,17 +10,19 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        player.score = player.pickedUpFlags * 900;
+
         if (player.pickedUpFlags == 3)
         {
+            player.score += flagChaser.flagsLeft * 2250;
             Debug.Log($"You won. Score: {player.score}");
-            EditorApplication.isPlaying = false;
+            EditorApplication.isPaused = true;
         }
         if (flagChaser.flagsLeft == 0)
         {
             Debug.Log($"You lost. Score: {player.score}");
-            EditorApplication.isPlaying = false;
+            EditorApplication.isPaused = false;
         }
-        player.score = player.pickedUpFlags * 900;
-        scoreText.text = player.score.ToString();
+
     }
 }

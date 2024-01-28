@@ -254,11 +254,11 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Flag"))
+        if (other.gameObject.CompareTag("EnemyFlag"))
         {
             other.gameObject.SetActive(false);
             pickedUpFlags++;
-            Debug.Log("Flag picked up by player");
+            Debug.Log($"Flag picked up by player\nScore {score}");
         }
     }
 }
