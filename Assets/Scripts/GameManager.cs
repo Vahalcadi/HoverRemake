@@ -73,6 +73,9 @@ public class GameManager : MonoBehaviour
         GameObject obj = playerFlags.Last();
         Destroy(playerFlags.Last());
         playerFlags.Remove(obj);
+
+        CheckExtractedNumber();
+        playerFlags.Add(Instantiate(playerFlag, flagSpawnpoints[random].transform));
     }
 
     private void CheckExtractedNumber()
