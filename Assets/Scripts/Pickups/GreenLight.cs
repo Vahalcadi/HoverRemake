@@ -30,6 +30,7 @@ public class GreenLight : Pickup
 
         base.UsePickup();
 
+        player.isSlowedDown = false;
         player.isSpedUp = true;
         
     }

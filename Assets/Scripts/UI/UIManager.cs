@@ -36,7 +36,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI wallText;
     [SerializeField] TextMeshProUGUI invisibilityText;
 
-    Coroutine tempBarFill;
+    Coroutine shieldBarCoroutine;
+    Coroutine invisibleBarCoroutine;
+    Coroutine wallBarCoroutine;
+    Coroutine greenLightBarCoroutine;
+    Coroutine redLightBarCoroutine;
 
     private void Start()
     {
@@ -63,29 +67,45 @@ public class UIManager : MonoBehaviour
         accelerationBar.fillAmount = player actual velocity
         */
 
-        if (player.isShielded && tempBarFill == null)
+        
+
+        if (player.isShielded && shieldBarCoroutine == null)
         {
-            tempBarFill = StartCoroutine(DecreaseFillAmount(shieldBar, player.isShielded));
+            shieldBarCoroutine = StartCoroutine(DecreaseFillAmount(shieldBar, player.isShielded,0));
+            
         }
 
-        if (player.isInvisible && tempBarFill == null)
+        if (player.isInvisible && invisibleBarCoroutine == null)
         {
-            tempBarFill = StartCoroutine(DecreaseFillAmount(invisibilityBar, player.isInvisible));
+            invisibleBarCoroutine = StartCoroutine(DecreaseFillAmount(invisibilityBar, player.isInvisible,1));
         }
 
-        if (player.wallPlaced && tempBarFill == null)
+        if (player.wallPlaced && wallBarCoroutine == null)
         {
-            tempBarFill = StartCoroutine(DecreaseFillAmount(wallBar, player.wallPlaced));
+            wallBarCoroutine = StartCoroutine(DecreaseFillAmount(wallBar, player.wallPlaced,2));
         }
 
-        if (player.isSpedUp && tempBarFill == null)
+        if (player.isSpedUp && greenLightBarCoroutine == null)
         {
-            tempBarFill = StartCoroutine(DecreaseFillAmount(greenLightBar, player.isSpedUp));
+            if (redLightBarCoroutine != null)
+            {
+                StopCoroutine(redLightBarCoroutine);
+                redLightBarCoroutine = null;
+                redLightBar.fillAmount = 0;
+            }
+
+            greenLightBarCoroutine = StartCoroutine(DecreaseFillAmount(greenLightBar, player.isSpedUp,3));
         }
 
-        if (player.isSlowedDown && tempBarFill == null)
+        if (player.isSlowedDown && redLightBarCoroutine == null)
         {
-            tempBarFill = StartCoroutine(DecreaseFillAmount(redLightBar, player.isSlowedDown));
+            if (greenLightBarCoroutine != null)
+            {
+                StopCoroutine(greenLightBarCoroutine);
+                greenLightBarCoroutine = null;  
+                greenLightBar.fillAmount = 0;
+            }
+            redLightBarCoroutine = StartCoroutine(DecreaseFillAmount(redLightBar, player.isSlowedDown,4));
         }
 
 
@@ -139,7 +159,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    IEnumerator DecreaseFillAmount(Image image, bool isActive)
+    IEnumerator DecreaseFillAmount(Image image, bool isActive, int coroutineIndex)
     {
         float decreaseSpeed = 0.1f;
         image.fillAmount = 1f;
@@ -148,6 +168,24 @@ public class UIManager : MonoBehaviour
             image.fillAmount -= decreaseSpeed * Time.deltaTime;
             yield return null;
         }
-        tempBarFill = null;
+
+        switch(coroutineIndex)
+        {
+            case 0:
+                shieldBarCoroutine = null;
+                break;
+            case 1:
+                invisibleBarCoroutine = null;
+                break;
+            case 2:
+                wallBarCoroutine = null;
+                break;
+            case 3:
+                greenLightBarCoroutine = null;
+                break;
+            case 4:
+                redLightBarCoroutine = null;
+                break;
+        }
     }
 }

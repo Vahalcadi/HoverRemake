@@ -21,6 +21,7 @@ public class RedLight : Pickup
 
         base.UsePickup();
 
+        player.isSpedUp = false;
         player.isSlowedDown = true;
     }
 

@@ -18,12 +18,6 @@ public class Player : MonoBehaviour
     [SerializeField] protected float groundCheckDistance = 1;
     [SerializeField] protected LayerMask whatIsGround;
 
-    [Header("Climb Stairs info")]
-    [SerializeField] private GameObject stepRaycastUp;
-    [SerializeField] private GameObject stepRaycastLow;
-    [SerializeField] private float stepHeight;
-    [SerializeField] private float stepSnap;
-
     [Header("Shield reference region")]
     public bool isShielded;
 
@@ -42,6 +36,7 @@ public class Player : MonoBehaviour
     public bool isSlowedDown;
 
     [Header("Wall reference region")]
+    [SerializeField] private Transform wallSpawnpoint;
     public int wallUses;
     public bool wallPlaced;
     public float wallDuration;
@@ -52,6 +47,9 @@ public class Player : MonoBehaviour
 
     [Header("Flag reference region")]
     public int pickedUpFlags;
+
+    [Header("Camera reference region")]
+    [SerializeField] private float horizontalCameraSpeed = 10;
 
     private InputManager inputManager;
     private Transform cameraTransform;
@@ -66,7 +64,6 @@ public class Player : MonoBehaviour
         else
             Instance = this;
 
-        //stepRaycastUp.transform.position = new Vector3(stepRaycastUp.transform.position.x, stepHeight, stepRaycastUp.transform.position.z);
     }
 
     private void Start()
@@ -80,14 +77,12 @@ public class Player : MonoBehaviour
         Jump();
         PlaceWall();
         Invisibility();
+        Rotate();
     }
 
     private void FixedUpdate()
     {
         Move();
-        Rotate();
-        //ClimbStep();
-
     }
 
     void Move()
@@ -95,14 +90,14 @@ public class Player : MonoBehaviour
         //Get value of x and y from input using Input Action component
         accelDecel = inputManager.GetAccelDecel();
 
-        //Assign default velocity to a vector3 variable
+        /*//Assign default velocity to a vector3 variable
         Vector3 currentVelocity = rb.velocity;
 
         //Assign registered x and y input to a vector3 variable
         Vector3 targetVelocity = new Vector3(accelDecel.x, 0f, accelDecel.y);
 
         //Bounding forward movement to camera direction
-        targetVelocity = cameraTransform.forward * targetVelocity.z;
+        targetVelocity = cameraTransform.forward.normalized * targetVelocity.z;
 
         //checking is player has an active speed buff (GreenLight) and assigning velocity accordingly
         if (isSpedUp)
@@ -120,9 +115,30 @@ public class Player : MonoBehaviour
 
         //Limit force
         Vector3.ClampMagnitude(velocityChange, maxForce);
+*/
+        if (accelDecel.y != 0)
+        {
+            float finalSpeed = accelDecel.y * speed;
 
-        //Move player
-        rb.AddForce(velocityChange);
+            if (isSpedUp)
+                finalSpeed *= speedMultiplier;
+            else if(isSlowedDown)
+                finalSpeed *= slowMultiplier;
+            
+            //Move player
+            rb.AddForce(transform.forward * finalSpeed * Time.fixedDeltaTime);
+        }
+
+        rb.velocity = new Vector3(ClampVelocityAxis(true), rb.velocity.y, ClampVelocityAxis(false));
+    }
+
+    private float ClampVelocityAxis(bool isX)
+    {
+        if (isX)
+            return Mathf.Clamp(rb.velocity.x,-maxForce,maxForce);
+        else
+            return Mathf.Clamp(rb.velocity.z, -maxForce, maxForce);
+
     }
 
     void Jump()
@@ -182,10 +198,8 @@ public class Player : MonoBehaviour
 
         wallPlaced = true;
         Debug.Log("WALL PLACED");
-        Quaternion wallRotation = cameraTransform.rotation;
-        wallRotation *= Quaternion.AngleAxis(90f, Vector3.up);
-        Vector3 spawnPosition = new Vector3(cameraTransform.position.x, cameraTransform.position.y, cameraTransform.position.z - 1);
-        GameObject wall = Instantiate(wallPrefab, spawnPosition, wallRotation);
+        
+        GameObject wall = Instantiate(wallPrefab, wallSpawnpoint.position, wallSpawnpoint.rotation);
         wallUses--;
 
         yield return new WaitForSeconds(wallDuration);
@@ -232,7 +246,16 @@ public class Player : MonoBehaviour
      * **/
     void Rotate()
     {
+
         rotation = inputManager.GetRotation();
+        transform.Rotate(new Vector3( 0, rotation.x * horizontalCameraSpeed * Time.deltaTime, 0));
+        // Assign x value to the vector3 variable "initialRotation"
+
+
+        /*   // Assign new value of RawOrientation to camera to define an horizontal visual movement
+           state.RawOrientation = Quaternion.Euler(0, initialRotation.x, 0);*/
+
+        
     }
 
 
