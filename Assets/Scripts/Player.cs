@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 
     [Header("Wall reference region")]
     public int wallUses;
+    public bool wallPlaced;
     public float wallDuration;
     public GameObject wallPrefab;
 
@@ -179,6 +180,7 @@ public class Player : MonoBehaviour
         * 
         * **/
 
+        wallPlaced = true;
         Debug.Log("WALL PLACED");
         Quaternion wallRotation = cameraTransform.rotation;
         wallRotation *= Quaternion.AngleAxis(90f, Vector3.up);
@@ -189,7 +191,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(wallDuration);
 
         Destroy(wall);
-
+        wallPlaced = false;
     }
 
     void Invisibility()

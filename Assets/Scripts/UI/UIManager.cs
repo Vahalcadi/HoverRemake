@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +36,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI wallText;
     [SerializeField] TextMeshProUGUI invisibilityText;
 
+    Coroutine tempBarFill;
+
     private void Start()
     {
         //sets all the flags SpriteRenderer to false
@@ -54,16 +57,37 @@ public class UIManager : MonoBehaviour
         invisibilityText.text = $"{player.invisibilityUses}";
         scoreText.text = player.score.ToString();
 
-        //ability bars (need to figure out how to do calcs considering that fillAmount is a float with 0-1 value)
+        //ability bars
         jumpBar.fillAmount = (player.transform.position.y - 0.5f) / 4;
-        /* for these we probaly need to add an actual timer each time an ability is used and update the fillAmount based on it
-        wallBar.fillAmount = 
-        invisibilityBar.fillAmount =
+        /* 
         accelerationBar.fillAmount = player actual velocity
-        shieldBar.fillAmount =
-        redLightBar.fillAmount = 
-        greenLightBar.fillAmount = 
         */
+
+        if (player.isShielded && tempBarFill == null)
+        {
+            tempBarFill = StartCoroutine(DecreaseFillAmount(shieldBar, player.isShielded));
+        }
+
+        if (player.isInvisible && tempBarFill == null)
+        {
+            tempBarFill = StartCoroutine(DecreaseFillAmount(invisibilityBar, player.isInvisible));
+        }
+
+        if (player.wallPlaced && tempBarFill == null)
+        {
+            tempBarFill = StartCoroutine(DecreaseFillAmount(wallBar, player.wallPlaced));
+        }
+
+        if (player.isSpedUp && tempBarFill == null)
+        {
+            tempBarFill = StartCoroutine(DecreaseFillAmount(greenLightBar, player.isSpedUp));
+        }
+
+        if (player.isSlowedDown && tempBarFill == null)
+        {
+            tempBarFill = StartCoroutine(DecreaseFillAmount(redLightBar, player.isSlowedDown));
+        }
+
 
         //activates/deactivates SpriteRenderer based on flags currently owned by player/enemy
         switch (player.pickedUpFlags)
@@ -113,5 +137,17 @@ public class UIManager : MonoBehaviour
                 redFlag3.enabled = true;
                 break;
         }
+    }
+
+    IEnumerator DecreaseFillAmount(Image image, bool isActive)
+    {
+        float decreaseSpeed = 0.1f;
+        image.fillAmount = 1f;
+        while (image.fillAmount > 0f && isActive)
+        {
+            image.fillAmount -= decreaseSpeed * Time.deltaTime;
+            yield return null;
+        }
+        tempBarFill = null;
     }
 }

@@ -7490,7 +7490,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -65589,6 +65589,7 @@ MonoBehaviour:
   jumpUses: 0
   isSlowedDown: 0
   wallUses: 0
+  wallPlaced: 0
   wallDuration: 9
   wallPrefab: {fileID: 4464130438781865524, guid: b7cef43f3397e6445a5fb13f9a3861e5,
     type: 3}
