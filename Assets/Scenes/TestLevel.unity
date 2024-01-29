@@ -65569,7 +65569,7 @@ MonoBehaviour:
   speedMultiplier: 2
   slowMultiplier: 0.5
   maxForce: 1
-  jumpForce: 10
+  jumpForce: 11
   accelDecel: {x: 0, y: 0}
   rotation: {x: 0, y: 0}
   groundCheck: {fileID: 55893314}
