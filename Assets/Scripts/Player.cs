@@ -90,32 +90,7 @@ public class Player : MonoBehaviour
         //Get value of x and y from input using Input Action component
         accelDecel = inputManager.GetAccelDecel();
 
-        /*//Assign default velocity to a vector3 variable
-        Vector3 currentVelocity = rb.velocity;
-
-        //Assign registered x and y input to a vector3 variable
-        Vector3 targetVelocity = new Vector3(accelDecel.x, 0f, accelDecel.y);
-
-        //Bounding forward movement to camera direction
-        targetVelocity = cameraTransform.forward.normalized * targetVelocity.z;
-
-        //checking is player has an active speed buff (GreenLight) and assigning velocity accordingly
-        if (isSpedUp)
-            targetVelocity *= speed * speedMultiplier;
-        else if (isSlowedDown)
-            targetVelocity *= speed * slowMultiplier;
-        else
-            targetVelocity *= speed;
-
-        //Align direction
-        targetVelocity = transform.TransformDirection(targetVelocity);
-
-        //Calculate forces
-        Vector3 velocityChange = (targetVelocity - currentVelocity);
-
-        //Limit force
-        Vector3.ClampMagnitude(velocityChange, maxForce);
-*/
+       
         if (accelDecel.y != 0)
         {
             float finalSpeed = accelDecel.y * speed;
