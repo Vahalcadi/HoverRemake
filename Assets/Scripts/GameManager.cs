@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -58,11 +57,16 @@ public class GameManager : MonoBehaviour
 
     private void InstantiatePlayerFlags()
     {
-        for(int i = 0; i < numberOfPlayerFlags - player.pickedUpFlags; i++)
+        for(int i = 0; i < numberOfPlayerFlags; i++)
         {
             CheckExtractedNumber();
             playerFlags.Add(Instantiate(playerFlag, flagSpawnpoints[random].transform));
         }
+    }
+
+    private void InstantiateEnemyFlag()
+    {
+      
     }
 
     public void DestroyLastPlayerPickedUpFlag()
@@ -73,6 +77,8 @@ public class GameManager : MonoBehaviour
         GameObject obj = playerFlags.Last();
         Destroy(playerFlags.Last());
         playerFlags.Remove(obj);
+
+        player.pickedUpFlags--;
 
         CheckExtractedNumber();
         playerFlags.Add(Instantiate(playerFlag, flagSpawnpoints[random].transform));

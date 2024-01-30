@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0f9ef8bb679c73c4797533b1937c83ff,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -39.221012
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f9ef8bb679c73c4797533b1937c83ff,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.000002861023
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f9ef8bb679c73c4797533b1937c83ff,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.257393
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f9ef8bb679c73c4797533b1937c83ff,
         type: 3}
@@ -73,8 +73,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueFlag
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f9ef8bb679c73c4797533b1937c83ff,
+        type: 3}
+      propertyPath: m_TagString
+      value: EnemyFlag
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0f9ef8bb679c73c4797533b1937c83ff,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7724323175203892395}
   m_SourcePrefab: {fileID: 100100000, guid: 0f9ef8bb679c73c4797533b1937c83ff, type: 3}
+--- !u!1 &6665290691193273010 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0f9ef8bb679c73c4797533b1937c83ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 5818289254673401827}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &-7724323175203892395
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6665290691193273010}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.36588907
+  m_Height: 2.0434923
+  m_Direction: 1
+  m_Center: {x: 6.365399e-16, y: 1.0217462, z: 0.01}

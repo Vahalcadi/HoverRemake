@@ -29,7 +29,7 @@ public class RemoveFlag : Trap
 
         if (other.gameObject.CompareTag("Player") && !player.GetComponent<Player>().isShielded && player.GetComponent<Player>().pickedUpFlags > 0)
         {
-            player.GetComponent<Player>().pickedUpFlags--;
+            //player.GetComponent<Player>().pickedUpFlags--;
             GameManager.Instance.DestroyLastPlayerPickedUpFlag();
 
             Debug.Log($"Removed one flag from player\nflags: {player.GetComponent<Player>().pickedUpFlags}");
