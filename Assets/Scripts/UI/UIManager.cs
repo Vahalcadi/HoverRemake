@@ -63,11 +63,8 @@ public class UIManager : MonoBehaviour
 
         //ability bars
         jumpBar.fillAmount = (player.transform.position.y - 0.6f) / 5;
-        /* 
-        accelerationBar.fillAmount = player actual velocity
-        */
 
-
+        accelerationBar.fillAmount = player.GetComponent<Rigidbody>().velocity.magnitude / 17;
 
         if (player.isShielded && shieldBarCoroutine == null)
         {
