@@ -47,12 +47,12 @@ public class GameManager : MonoBehaviour
         {
             player.score += flagChaser.flagsLeft * 2250;
             Debug.Log($"You won. Score: {player.score}");
-            EditorApplication.isPaused = true;
+            //EditorApplication.isPaused = true;            -temporarily disabled for build
         }
         if (flagChaser.flagsLeft == 0)
         {
             Debug.Log($"You lost. Score: {player.score}");
-            EditorApplication.isPaused = false;
+            //EditorApplication.isPaused = false;           -temporarily disabled for build
         }
     }
 
