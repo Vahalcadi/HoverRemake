@@ -5,7 +5,6 @@ using UnityEngine;
 public class GreenLight : Pickup
 {
 
-
     protected override void Start()
     {
         base.Start();
@@ -16,7 +15,9 @@ public class GreenLight : Pickup
         base.Update();
 
         if (durationTimer < 0)
+        {
             player.isSpedUp = false;
+        }
     }
 
     public override bool CanUsePickup()
@@ -30,8 +31,9 @@ public class GreenLight : Pickup
 
         base.UsePickup();
 
-        player.isSpedUp = true;
-        
+        player.isSlowedDown = false;
+
+        player.isSpedUp = true;      
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -41,7 +43,6 @@ public class GreenLight : Pickup
 
         base.OnTriggerEnter(other);
 
-        CanUsePickup();
-        
+        CanUsePickup(); 
     }
 }

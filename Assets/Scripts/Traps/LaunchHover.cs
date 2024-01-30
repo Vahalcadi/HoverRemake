@@ -4,8 +4,9 @@ using UnityEngine.AI;
 
 public class LaunchHover : Trap
 {
-    [SerializeField] private Transform arrivalPosition;
     public float travelSpeed;
+    public float trapEnsnaringDuration;
+    [SerializeField] Transform throwDirection;
 
     protected override void Update()
     {
@@ -18,64 +19,88 @@ public class LaunchHover : Trap
      * Upon triggering contact with a gameobject, it checks if it is either a player or an enemy and disables the corresponding movement agent
      * 
      * **/
+    /* protected override void OnTriggerEnter(Collider other)
+     {
+         if (cooldownTimer > 0)
+             return;
+
+         if (other.gameObject.CompareTag("Player") && !player.GetComponent<Player>().isShielded)
+         {
+             StartCoroutine(LaunchPlayer());
+         }
+         else if (other.gameObject.CompareTag("EnemyBumper"))
+         {
+             enemyBumper.GetComponent<NavMeshAgent>().enabled = false;
+         }
+         else if (other.gameObject.CompareTag("EnemyFlagChaser"))
+         {
+             enemyFlagChaser.GetComponent<NavMeshAgent>().enabled = false;
+         }
+     }
+ */
+
     protected override void OnTriggerEnter(Collider other)
     {
-        if (cooldownTimer > 0)
-            return;
-
-        if (other.gameObject.CompareTag("Player") && !player.GetComponent<Player>().isShielded)
-        {
-            InputManager.Instance.OnDisable();
-        }
-        else if (other.gameObject.CompareTag("EnemyBumper"))
-        {
-            enemyBumper.GetComponent<NavMeshAgent>().enabled = false;  
-        }
-        else if (other.gameObject.CompareTag("EnemyFlagChaser"))
-        {
-            enemyFlagChaser.GetComponent<NavMeshAgent>().enabled = false; 
-        }
+        base.OnTriggerEnter(other);
     }
 
-
-    /**
-     * 
-     * After OnTriggerEnter is called, either the player or the enemy is forcefully moved to a (Vector3) destination
-     * 
-     * the angularVelocity and Velocity of the gameobjects is set to zero every frame to prevent them from slipping away
-     * 
-     * **/
-    private void OnTriggerStay(Collider other)
+    protected override bool CanActivateTrap(Collider other)
     {
-        if (cooldownTimer > 0)
-            return;
+        return base.CanActivateTrap(other); 
+    }
 
+    protected override void ActivateTrap(Collider other)
+    {
+        base.ActivateTrap(other);
+        TrapTrigger(other);
+    }
+
+    private void TrapTrigger(Collider other)
+    {
         if (other.gameObject.CompareTag("Player") && !player.GetComponent<Player>().isShielded)
         {
-            player.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            player.transform.position = Vector3.MoveTowards(player.transform.position, arrivalPosition.position, travelSpeed * Time.deltaTime);
+            StartCoroutine(LaunchPlayer());
         }
         else if (other.gameObject.CompareTag("EnemyBumper"))
         {
-            enemyBumper.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            enemyBumper.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            enemyBumper.transform.position = Vector3.MoveTowards(enemyBumper.transform.position, arrivalPosition.position, travelSpeed * Time.deltaTime);
+            StartCoroutine(LaunchEnemy(enemyBumper));
         }
         else if (other.gameObject.CompareTag("EnemyFlagChaser"))
         {
-            enemyFlagChaser.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            enemyFlagChaser.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            enemyFlagChaser.transform.position = Vector3.MoveTowards(enemyFlagChaser.transform.position, arrivalPosition.position, travelSpeed * Time.deltaTime);
+            StartCoroutine(LaunchEnemy(enemyFlagChaser));
         }
     }
 
+    private IEnumerator LaunchPlayer()
+    {
+        InputManager.Instance.OnDisable();
 
-    /**
-     * After either the player or the enemy reaches the destination, their movement agents get set to enable
-     * 
-     * cooldownTimer is then set to cooldown
-     * **/
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        player.transform.position = gameObject.transform.position;
+
+        player.transform.LookAt(throwDirection);
+
+        yield return new WaitForSeconds(trapEnsnaringDuration);
+
+        player.GetComponent<Rigidbody>().AddForce(player.transform.forward * travelSpeed, ForceMode.Impulse);
+    }
+
+    private IEnumerator LaunchEnemy(GameObject enemyHover)
+    {
+        enemyHover.GetComponent<NavMeshAgent>().enabled = false;
+
+        enemyHover.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        enemyHover.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        enemyHover.transform.position = gameObject.transform.position;
+
+        enemyHover.transform.LookAt(throwDirection);
+
+        yield return new WaitForSeconds(trapEnsnaringDuration);
+
+        enemyHover.GetComponent<Rigidbody>().AddForce(enemyHover.transform.forward * travelSpeed, ForceMode.Impulse);
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && !player.GetComponent<Player>().isShielded)
@@ -88,10 +113,7 @@ public class LaunchHover : Trap
         }
         else if (other.gameObject.CompareTag("EnemyFlagChaser"))
         {
-            enemyFlagChaser.GetComponent<NavMeshAgent>().enabled = false;
+            enemyFlagChaser.GetComponent<NavMeshAgent>().enabled = true;
         }
-
-        if(cooldownTimer < 0)
-            cooldownTimer = cooldown;
     }
 }

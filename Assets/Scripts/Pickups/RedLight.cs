@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class RedLight : Pickup
 {
+
     protected override void Start()
     {
         base.Start();
@@ -12,7 +13,9 @@ public class RedLight : Pickup
         base.Update();
 
         if (durationTimer < 0)
+        {
             player.isSlowedDown = false;
+        }
     }
 
     public override void UsePickup()
@@ -20,6 +23,8 @@ public class RedLight : Pickup
         Debug.Log("RedLight picked up");
 
         base.UsePickup();
+
+        player.isSpedUp = false;
 
         player.isSlowedDown = true;
     }
