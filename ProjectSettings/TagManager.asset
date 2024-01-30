@@ -8,6 +8,7 @@ TagManager:
   - EnemyBumper
   - PlayerFlag
   - EnemyFlag
+  - spawnpoint
   layers:
   - Default
   - TransparentFX

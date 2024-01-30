@@ -38,7 +38,7 @@ public class RemoveFlag : Trap
 
         if (other.gameObject.CompareTag("EnemyFlagChaser") && enemyFlagChaser.GetComponent<NavigationFlagChaser>().flagsLeft < 3)
         {
-            enemyFlagChaser.GetComponent<NavigationFlagChaser>().flagsLeft--;
+            GameManager.Instance.DestroyLastEnemyPickedUpFlag();
             Debug.Log($"Removed one flag from enemy\nflags: {enemyFlagChaser.GetComponent<NavigationFlagChaser>().flagsLeft}");
         }
         else Debug.Log($"No flags to remove from enemy\nflags: {enemyFlagChaser.GetComponent<NavigationFlagChaser>().flagsLeft}");

@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
 
         rb.velocity = new Vector3(ClampVelocityAxis(true), rb.velocity.y, ClampVelocityAxis(false));
 
-        Debug.Log(rb.velocity);
+        
     }
 
     private float ClampVelocityAxis(bool isX)

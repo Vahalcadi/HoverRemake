@@ -14,9 +14,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject enemyFlag;
 
     [NonSerialized] public List<GameObject> playerFlags = new();
+    [NonSerialized] public List<GameObject> enemyFlags = new();
 
     [SerializeField] private int numberOfPlayerFlags;
-    [SerializeField] private int numberOfEnemyFlags;
+    private int enemyPickedUpFlags;
 
     public List<GameObject> flagSpawnpoints;
     [NonSerialized] public List<int> extractedSpawnpoints = new();
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         InstantiatePlayerFlags();
+        InstantiateEnemyFlags();
     }
 
     private void Update()
@@ -64,9 +66,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void InstantiateEnemyFlag()
+    private void InstantiateEnemyFlags()
     {
-      
+        for (int i = 0; i < flagChaser.flagsLeft; i++)
+        {
+            CheckExtractedNumber();
+            enemyFlags.Add(Instantiate(enemyFlag, flagSpawnpoints[random].transform));
+        }
+    }
+
+    public void DestroyLastEnemyPickedUpFlag()
+    {
+        int enemyFlagIndex = flagSpawnpoints.IndexOf(enemyFlags.Last().transform.parent.gameObject);
+        extractedSpawnpoints.Remove(enemyFlagIndex);
+
+        GameObject obj = enemyFlags.Last();
+        Destroy(enemyFlags.Last());
+        enemyFlags.Remove(obj);
+
+        enemyPickedUpFlags--;
+
+        CheckExtractedNumber();
+        enemyFlags.Add(Instantiate(enemyFlag, flagSpawnpoints[random].transform));
     }
 
     public void DestroyLastPlayerPickedUpFlag()
@@ -82,6 +103,11 @@ public class GameManager : MonoBehaviour
 
         CheckExtractedNumber();
         playerFlags.Add(Instantiate(playerFlag, flagSpawnpoints[random].transform));
+    }
+
+    public void EnemyHasPickedUpFlag()
+    {
+        enemyPickedUpFlags++;
     }
 
     private void CheckExtractedNumber()

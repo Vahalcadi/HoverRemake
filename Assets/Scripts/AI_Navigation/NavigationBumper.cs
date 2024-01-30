@@ -9,9 +9,10 @@ public class NavigationBumper : EntityHover
 
     private void Update()
     {
-        if (playerObject.isInvisible == false)
-            agentBumper.destination = player.position;
-        else return;
+        if (playerObject.isInvisible == true)
+            return;
+
+        else agentBumper.destination = player.position;
     }
 
     protected override void OnCollisionEnter(Collision collision)
