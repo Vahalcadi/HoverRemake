@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float speedMultiplier;
     [SerializeField] float slowMultiplier;
-    [SerializeField] float maxForce;
+    public float maxVelocity;
     [SerializeField] float jumpForce;
     public Vector2 accelDecel;
     public Vector2 rotation;
@@ -120,7 +120,7 @@ public class Player : MonoBehaviour
         {
             float finalSpeed = accelDecel.y * speed;
 
-            if (isSpedUp)
+           if (isSpedUp)
                 finalSpeed *= speedMultiplier;
             else if(isSlowedDown)
                 finalSpeed *= slowMultiplier;
@@ -130,14 +130,27 @@ public class Player : MonoBehaviour
         }
 
         rb.velocity = new Vector3(ClampVelocityAxis(true), rb.velocity.y, ClampVelocityAxis(false));
+
+        Debug.Log(rb.velocity);
     }
 
     private float ClampVelocityAxis(bool isX)
     {
+        float currentMaxVelocity = maxVelocity;
+        float speed;
+
+        if (isSpedUp)
+            maxVelocity *= speedMultiplier;
+        else if (isSlowedDown)
+            maxVelocity *= slowMultiplier;
+
         if (isX)
-            return Mathf.Clamp(rb.velocity.x,-maxForce,maxForce);
+            speed = Mathf.Clamp(rb.velocity.x,-maxVelocity,maxVelocity);
         else
-            return Mathf.Clamp(rb.velocity.z, -maxForce, maxForce);
+            speed = Mathf.Clamp(rb.velocity.z, -maxVelocity, maxVelocity);
+
+        maxVelocity = currentMaxVelocity;
+        return speed;
 
     }
 
