@@ -62,27 +62,27 @@ public class UIManager : MonoBehaviour
         scoreText.text = player.score.ToString();
 
         //ability bars
-        jumpBar.fillAmount = (player.transform.position.y - 0.5f) / 4;
+        jumpBar.fillAmount = (player.transform.position.y - 0.6f) / 5;
         /* 
         accelerationBar.fillAmount = player actual velocity
         */
 
-        
+
 
         if (player.isShielded && shieldBarCoroutine == null)
         {
-            shieldBarCoroutine = StartCoroutine(DecreaseFillAmount(shieldBar, player.isShielded,0));
-            
+            shieldBarCoroutine = StartCoroutine(DecreaseFillAmount(shieldBar, player.isShielded, 0));
+
         }
 
         if (player.isInvisible && invisibleBarCoroutine == null)
         {
-            invisibleBarCoroutine = StartCoroutine(DecreaseFillAmount(invisibilityBar, player.isInvisible,1));
+            invisibleBarCoroutine = StartCoroutine(DecreaseFillAmount(invisibilityBar, player.isInvisible, 1));
         }
 
         if (player.wallPlaced && wallBarCoroutine == null)
         {
-            wallBarCoroutine = StartCoroutine(DecreaseFillAmount(wallBar, player.wallPlaced,2));
+            wallBarCoroutine = StartCoroutine(DecreaseFillAmount(wallBar, player.wallPlaced, 2));
         }
 
         if (player.isSpedUp && greenLightBarCoroutine == null)
@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
                 redLightBar.fillAmount = 0;
             }
 
-            greenLightBarCoroutine = StartCoroutine(DecreaseFillAmount(greenLightBar, player.isSpedUp,3));
+            greenLightBarCoroutine = StartCoroutine(DecreaseFillAmount(greenLightBar, player.isSpedUp, 3));
         }
 
         if (player.isSlowedDown && redLightBarCoroutine == null)
@@ -102,10 +102,10 @@ public class UIManager : MonoBehaviour
             if (greenLightBarCoroutine != null)
             {
                 StopCoroutine(greenLightBarCoroutine);
-                greenLightBarCoroutine = null;  
+                greenLightBarCoroutine = null;
                 greenLightBar.fillAmount = 0;
             }
-            redLightBarCoroutine = StartCoroutine(DecreaseFillAmount(redLightBar, player.isSlowedDown,4));
+            redLightBarCoroutine = StartCoroutine(DecreaseFillAmount(redLightBar, player.isSlowedDown, 4));
         }
 
 
@@ -161,7 +161,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator DecreaseFillAmount(Image image, bool isActive, int coroutineIndex)
     {
-        float decreaseSpeed = 0.1f;
+        float decreaseSpeed = 0.11f;
         image.fillAmount = 1f;
         while (image.fillAmount > 0f && isActive)
         {
@@ -169,7 +169,7 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
-        switch(coroutineIndex)
+        switch (coroutineIndex)
         {
             case 0:
                 shieldBarCoroutine = null;
