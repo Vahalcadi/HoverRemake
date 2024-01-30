@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
         jumpText.text = $"{player.jumpUses}";
         wallText.text = $"{player.wallUses}";
         invisibilityText.text = $"{player.invisibilityUses}";
-        scoreText.text = player.score.ToString();
+        scoreText.text = $"{player.score:D7}";
 
         //ability bars
         jumpBar.fillAmount = (player.transform.position.y - 0.6f) / 5;
