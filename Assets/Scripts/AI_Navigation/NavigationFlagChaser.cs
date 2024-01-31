@@ -17,7 +17,7 @@ public class NavigationFlagChaser : MonoBehaviour
 
     private void Start()
     {
-        spawnpoints = GameManager.Instance.flagSpawnpoints;
+        spawnpoints = GameManager.Instance.flagSpawnPoints;
     }
 
     private void Update()
@@ -63,6 +63,7 @@ public class NavigationFlagChaser : MonoBehaviour
         if (other.gameObject.CompareTag("PlayerFlag"))
         {
             other.gameObject.SetActive(false);
+            GameManager.Instance.EnemyHasPickedUpFlag();
             flagsLeft--;
             Debug.Log("Flag picked by enemy");
         }

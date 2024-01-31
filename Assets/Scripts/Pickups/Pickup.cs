@@ -24,7 +24,7 @@ public class Pickup : MonoBehaviour
 
     protected virtual void Start()
     {
-        player = Player.Instance;  
+        player = Player.Instance.gameObject.GetComponent<Player>();
     }
 
     protected virtual void Update()

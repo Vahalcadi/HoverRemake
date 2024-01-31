@@ -6,21 +6,29 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Score region")]
     [SerializeField] Player player;
     [SerializeField] NavigationFlagChaser flagChaser;
     [SerializeField] TextMeshProUGUI scoreText;
 
+    [Header("Flags region")]
     [SerializeField] private GameObject playerFlag;
     [SerializeField] private GameObject enemyFlag;
-
     [NonSerialized] public List<GameObject> playerFlags = new();
     [NonSerialized] public List<GameObject> enemyFlags = new();
-
     [SerializeField] private int numberOfPlayerFlags;
     private int enemyPickedUpFlags;
+    public List<GameObject> flagSpawnPoints;
+    [NonSerialized] public List<int> extractedFlagSpawnpoints = new();
 
-    public List<GameObject> flagSpawnpoints;
-    [NonSerialized] public List<int> extractedSpawnpoints = new();
+
+    [Header("Pickup region")]
+    [SerializeField] private List<GameObject> pickupSpawnpoints;
+    [SerializeField] private List<GameObject> pickupPrefabs;
+    [SerializeField] private List<GameObject> pickups = new();
+    [SerializeField] private int numberOfPickupsPerType;
+    [NonSerialized] public List<int> extractedPickupSpawnpoints = new();
+
     private int random;
 
     public static GameManager Instance;
@@ -38,6 +46,7 @@ public class GameManager : MonoBehaviour
     {
         InstantiatePlayerFlags();
         InstantiateEnemyFlags();
+        InstantiatePickups();
     }
 
     private void Update()
@@ -57,12 +66,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #region Flags region
     private void InstantiatePlayerFlags()
     {
         for(int i = 0; i < numberOfPlayerFlags; i++)
         {
-            CheckExtractedNumber();
-            playerFlags.Add(Instantiate(playerFlag, flagSpawnpoints[random].transform));
+            CheckExtractedNumber(ref extractedFlagSpawnpoints, ref flagSpawnPoints);
+            playerFlags.Add(Instantiate(playerFlag, flagSpawnPoints[random].transform));
         }
     }
 
@@ -70,15 +80,15 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < flagChaser.flagsLeft; i++)
         {
-            CheckExtractedNumber();
-            enemyFlags.Add(Instantiate(enemyFlag, flagSpawnpoints[random].transform));
+            CheckExtractedNumber(ref extractedFlagSpawnpoints, ref flagSpawnPoints);
+            enemyFlags.Add(Instantiate(enemyFlag, flagSpawnPoints[random].transform));
         }
     }
 
     public void DestroyLastEnemyPickedUpFlag()
     {
-        int enemyFlagIndex = flagSpawnpoints.IndexOf(enemyFlags.Last().transform.parent.gameObject);
-        extractedSpawnpoints.Remove(enemyFlagIndex);
+        int enemyFlagIndex = flagSpawnPoints.IndexOf(enemyFlags.Last().transform.parent.gameObject);
+        extractedFlagSpawnpoints.Remove(enemyFlagIndex);
 
         GameObject obj = enemyFlags.Last();
         Destroy(enemyFlags.Last());
@@ -86,14 +96,14 @@ public class GameManager : MonoBehaviour
 
         enemyPickedUpFlags--;
 
-        CheckExtractedNumber();
-        enemyFlags.Add(Instantiate(enemyFlag, flagSpawnpoints[random].transform));
+        CheckExtractedNumber(ref extractedFlagSpawnpoints, ref flagSpawnPoints);
+        enemyFlags.Add(Instantiate(enemyFlag, flagSpawnPoints[random].transform));
     }
 
     public void DestroyLastPlayerPickedUpFlag()
     {
-        int playerFlagIndex = flagSpawnpoints.IndexOf(playerFlags.Last().transform.parent.gameObject);
-        extractedSpawnpoints.Remove(playerFlagIndex);
+        int playerFlagIndex = flagSpawnPoints.IndexOf(playerFlags.Last().transform.parent.gameObject);
+        extractedFlagSpawnpoints.Remove(playerFlagIndex);
 
         GameObject obj = playerFlags.Last();
         Destroy(playerFlags.Last());
@@ -101,8 +111,8 @@ public class GameManager : MonoBehaviour
 
         player.pickedUpFlags--;
 
-        CheckExtractedNumber();
-        playerFlags.Add(Instantiate(playerFlag, flagSpawnpoints[random].transform));
+        CheckExtractedNumber(ref extractedFlagSpawnpoints, ref flagSpawnPoints);
+        playerFlags.Add(Instantiate(playerFlag, flagSpawnPoints[random].transform));
     }
 
     public void EnemyHasPickedUpFlag()
@@ -110,12 +120,26 @@ public class GameManager : MonoBehaviour
         enemyPickedUpFlags++;
     }
 
-    private void CheckExtractedNumber()
+    #endregion
+
+    private void InstantiatePickups()
     {
-        random = UnityEngine.Random.Range(0, flagSpawnpoints.Count);
+        for(int i = 0; i < pickupPrefabs.Count; i++)
+        {
+            for (int j = 0; j < numberOfPickupsPerType; j++)
+            {
+                CheckExtractedNumber(ref extractedPickupSpawnpoints, ref pickupSpawnpoints);
+                pickups.Add(Instantiate(pickupPrefabs[i], pickupSpawnpoints[random].transform));
+            }
+        }   
+    }
+
+    private void CheckExtractedNumber(ref List<int> extractedSpawnpoints, ref List<GameObject> spawnPoints)
+    {
+        random = UnityEngine.Random.Range(0, spawnPoints.Count);
         if (extractedSpawnpoints.Contains(random))
         {
-            CheckExtractedNumber();
+            CheckExtractedNumber(ref extractedSpawnpoints, ref spawnPoints);
         }
         extractedSpawnpoints.Add(random);
     }

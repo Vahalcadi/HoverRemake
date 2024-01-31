@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class RandomPickup : Pickup
 {
-
-    public List<Pickup> Pickups = new List<Pickup>();
+    public List<Pickup> Pickups = new();
     int index;
 
     protected override void Start()
     {
         base.Start();
+        Pickups.Add(FindFirstObjectByType<Wall>());
+        Pickups.Add(FindFirstObjectByType<GreenLight>());
+        Pickups.Add(FindFirstObjectByType<Invisibility>());
+        Pickups.Add(FindFirstObjectByType<RedLight>());
+        Pickups.Add(FindFirstObjectByType<Shield>());
+        Pickups.Add(FindFirstObjectByType<Jump>());
     }
 
     protected override void Update()
@@ -54,12 +59,9 @@ public class RandomPickup : Pickup
             case 4:
                 Pickups[index].CanUsePickup();
                 break;
-            /*case 5:
+            case 5:
                 Pickups[index].CanUsePickup();
-                break;*/
-            /*case 6:
-                Pickups[index].CanUsePickup();
-                break;*/
+                break;
             
         }
     }
