@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region pickups region
     private void InstantiatePickups()
     {
         for(int i = 0; i < pickupPrefabs.Count; i++)
@@ -142,5 +143,14 @@ public class GameManager : MonoBehaviour
             CheckExtractedNumber(ref extractedSpawnpoints, ref spawnPoints);
         }
         extractedSpawnpoints.Add(random);
+    }
+    #endregion
+
+    public virtual void PauseGame(bool _pause)
+    {
+        if (_pause)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
     }
 }
