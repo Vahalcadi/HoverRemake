@@ -10,30 +10,21 @@ public class NavigationFlagChaser : MonoBehaviour
     [SerializeField] public int flagsLeft = 3; // doing so makes final score calculation easier
     List<GameObject> spawnpoints = new List<GameObject> ();
     private List<int> extractedSpawnpoints = new();
-    bool hasReachedDestination = true;
+    bool hasReachedDestination;
 
     private int random;
 
-
+    
     private void Start()
     {
         spawnpoints = GameManager.Instance.flagSpawnPoints;
+        CheckExtractedNumber();
     }
 
     private void Update()
     {
         SetChaserDestination();
     }
-
-    /**
-     * 
-     * get flag spawnpointas form gamemanager
-     * 
-     * send flagchaser to a random waypoint
-     * save waypoint index
-     * 
-     * repeat
-     * **/
 
     private void SetChaserDestination()
     {
