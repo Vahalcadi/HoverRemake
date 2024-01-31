@@ -1,20 +1,19 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NavigationFlagChaser : MonoBehaviour
+public class NavigationFlagChaser : EntityHover
 {
     [SerializeField] Transform flag;
     [SerializeField] public NavMeshAgent agentFlagChaser;
     [SerializeField] public int flagsLeft = 3; // doing so makes final score calculation easier
-    List<GameObject> spawnpoints = new List<GameObject> ();
+    List<GameObject> spawnpoints = new List<GameObject>();
     private List<int> extractedSpawnpoints = new();
     bool hasReachedDestination;
 
     private int random;
 
-    
+
     private void Start()
     {
         spawnpoints = GameManager.Instance.flagSpawnPoints;
@@ -34,7 +33,8 @@ public class NavigationFlagChaser : MonoBehaviour
             CheckExtractedNumber();
         }
 
-        agentFlagChaser.destination = spawnpoints[random].transform.position;
+        //agentFlagChaser.destination = spawnpoints[random].transform.position;
+        agentFlagChaser.destination = new Vector3(spawnpoints[random].transform.position.x, agentFlagChaser.transform.position.y, spawnpoints[random].transform.position.z);
 
         Debug.Log(hasReachedDestination);
     }
@@ -63,5 +63,10 @@ public class NavigationFlagChaser : MonoBehaviour
         {
             hasReachedDestination = true;
         }
+    }
+
+    protected override void OnCollisionEnter(Collision collision)
+    {
+        base.OnCollisionEnter(collision);
     }
 }
