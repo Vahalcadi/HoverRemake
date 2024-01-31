@@ -105,7 +105,6 @@ public class UIManager : MonoBehaviour
             redLightBarCoroutine = StartCoroutine(DecreaseFillAmount(redLightBar, player.isSlowedDown, 4));
         }
 
-
         //activates/deactivates SpriteRenderer based on flags currently owned by player/enemy
         switch (player.pickedUpFlags)
         {

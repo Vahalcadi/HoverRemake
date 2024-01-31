@@ -98,7 +98,7 @@ public class LaunchHover : Trap
 
         yield return new WaitForSeconds(trapEnsnaringDuration);
 
-        enemyHover.GetComponent<Rigidbody>().AddForce(enemyHover.transform.forward * travelSpeed, ForceMode.Impulse);
+        enemyHover.GetComponent<Rigidbody>().AddForce(enemyHover.transform.forward * (travelSpeed * 0.75f), ForceMode.Impulse);
     }
 
     private void OnTriggerExit(Collider other)
