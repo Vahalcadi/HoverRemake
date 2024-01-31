@@ -58,9 +58,6 @@
             "m_Id": "a2ac8ef7f5f14deaa78c588ce82c2477"
         },
         {
-            "m_Id": "fb9dff04f6ce424586b37b5f3435a068"
-        },
-        {
             "m_Id": "13578fa1f5c04b36915f212294fbad89"
         },
         {
@@ -152,20 +149,6 @@
                     "m_Id": "5aa47e1eb0d04fbc9224577302db632f"
                 },
                 "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "fb9dff04f6ce424586b37b5f3435a068"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "a2ac8ef7f5f14deaa78c588ce82c2477"
-                },
-                "m_SlotId": 1
             }
         }
     ],
@@ -547,29 +530,6 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "VertexDescription.Tangent"
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
-    "m_ObjectId": "3e1ed4da73e84e3c994267432dc77f83",
-    "m_Id": 0,
-    "m_DisplayName": "Tile",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-    },
-    "m_Labels": []
 }
 
 {
@@ -1165,8 +1125,8 @@
     "m_ShaderOutputName": "Tiling",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": 1.0,
-        "y": 1.0
+        "x": 10.0,
+        "y": 10.0
     },
     "m_DefaultValue": {
         "x": 0.0,
@@ -1444,42 +1404,6 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
-    "m_ObjectId": "fb9dff04f6ce424586b37b5f3435a068",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Property",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -1000.6666259765625,
-            "y": 223.33331298828126,
-            "width": 97.3333740234375,
-            "height": 36.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "3e1ed4da73e84e3c994267432dc77f83"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Property": {
-        "m_Id": "a3ad70789b45492db029c1884aff4ec6"
-    }
 }
 
 {
