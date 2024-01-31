@@ -46,7 +46,7 @@ public class LaunchHover : Trap
 
     protected override bool CanActivateTrap(Collider other)
     {
-        return base.CanActivateTrap(other); 
+        return base.CanActivateTrap(other);
     }
 
     protected override void ActivateTrap(Collider other)
@@ -77,7 +77,7 @@ public class LaunchHover : Trap
 
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        player.transform.position = gameObject.transform.position;
+        player.transform.position = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
 
         player.transform.LookAt(throwDirection);
 
@@ -92,13 +92,13 @@ public class LaunchHover : Trap
 
         enemyHover.GetComponent<Rigidbody>().velocity = Vector3.zero;
         enemyHover.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        enemyHover.transform.position = gameObject.transform.position;
+        enemyHover.transform.position = new Vector3(transform.position.x, enemyHover.transform.position.y, transform.position.z);
 
         enemyHover.transform.LookAt(throwDirection);
 
         yield return new WaitForSeconds(trapEnsnaringDuration);
 
-        enemyHover.GetComponent<Rigidbody>().AddForce(enemyHover.transform.forward * travelSpeed, ForceMode.Impulse);
+        enemyHover.GetComponent<Rigidbody>().AddForce(enemyHover.transform.forward * (travelSpeed * 0.75f), ForceMode.Impulse);
     }
 
     private void OnTriggerExit(Collider other)

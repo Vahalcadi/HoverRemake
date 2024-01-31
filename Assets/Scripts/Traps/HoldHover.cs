@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -52,7 +51,7 @@ public class HoldHover : Trap
         enemyHover.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         enemyHover.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-        enemyHover.transform.position = gameObject.transform.position;
+        enemyHover.transform.position = new Vector3(transform.position.x, enemyHover.transform.position.y, transform.position.z);
 
         yield return new WaitForSeconds(trapDuration);
 
@@ -64,7 +63,7 @@ public class HoldHover : Trap
         InputManager.Instance.OnDisable();
         player.GetComponent<Rigidbody>().velocity = Vector3.zero;
         player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        player.transform.position = gameObject.transform.position;
+        player.transform.position = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
         yield return new WaitForSeconds(trapDuration);
 
         InputManager.Instance.OnEnable();
