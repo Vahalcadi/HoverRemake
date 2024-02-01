@@ -163,6 +163,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7850516712060445369}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a04a0963604222d4cb4fc49a809ed953,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7099040005365161565}
   m_SourcePrefab: {fileID: 100100000, guid: a04a0963604222d4cb4fc49a809ed953, type: 3}
 --- !u!4 &8488344423739455803 stripped
 Transform:
@@ -213,3 +217,24 @@ MonoBehaviour:
   pickupName: Wall
   type: 1
   effectDuration: 6
+--- !u!95 &-7099040005365161565
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117388921995010945}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b580d8de0726a9248b50add4f9b4e839, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
