@@ -25,7 +25,7 @@ public class GameMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F2))
         {
             SwitchWithKeyTo(restartGameUI);
-            RestartGame();
+            //RestartGame();
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
@@ -48,7 +48,6 @@ public class GameMenu : MonoBehaviour
 
             return;
         }
-
         SwitchTo(_menu);
     }
 
@@ -60,10 +59,14 @@ public class GameMenu : MonoBehaviour
     public void SwitchTo(GameObject _menu)
     {
 
-
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        if (restartGameUI != null)
+        {
+            QuestionDialogUI.Instance.Hide();
         }
 
         if (inGameUI != null)
@@ -80,6 +83,11 @@ public class GameMenu : MonoBehaviour
         {
             if (_menu == inGameUI)
                 GameManager.Instance.PauseGame(false);
+            else if (_menu == restartGameUI)
+            {
+                GameManager.Instance.PauseGame(true);
+                RestartGame();
+            }
             else
                 GameManager.Instance.PauseGame(true);
 

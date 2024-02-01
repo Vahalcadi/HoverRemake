@@ -35,7 +35,7 @@ public class QuestionDialogUI : MonoBehaviour
 
     }
 
-    private void Hide()
+    public void Hide()
     {
         yesBtn.onClick.RemoveAllListeners();
         noBtn.onClick.RemoveAllListeners();
