@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -26,11 +27,12 @@ public class GameManager : MonoBehaviour
     [Header("Pickup region")]
     [SerializeField] private List<GameObject> pickupSpawnpoints;
     [SerializeField] private List<GameObject> pickupPrefabs;
-    [SerializeField] private List<GameObject> pickups = new();
+    [SerializeField] public List<GameObject> pickups = new();
     [NonSerialized] public List<GameObject> pickupsToRemove = new();
     [NonSerialized] public int numberOfPickupsToRemove;
     [SerializeField] private int numberOfPickupsPerType;
     [NonSerialized] public List<int> extractedPickupSpawnpoints = new();
+    [SerializeField] private float respawnTime;
 
     private int random;
 
@@ -74,7 +76,7 @@ public class GameManager : MonoBehaviour
         if (numberOfPickupsToRemove == 4)
         {
             numberOfPickupsToRemove = 0;
-            ReplacePickups();
+            StartCoroutine(ReplacePickups());
         }
     }
 
@@ -158,27 +160,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
-
-    private void ReplacePickups()
+    private IEnumerator ReplacePickups()
     {
-        int count = pickupsToRemove.Count;
-
-        for(int i = 0; i < count; i++)
+        yield return new WaitForSeconds(respawnTime);
+        for(int i = 0; i < pickupsToRemove.Count; i++)
         {
-            extractedPickupSpawnpoints.Remove(pickups.IndexOf(pickupsToRemove[i].transform.parent.gameObject));
-
-            GameObject obj = pickups[i];
-            Destroy(pickups[i]);
-            pickups.Remove(pickupsToRemove[i]);
+            pickupsToRemove[i].gameObject.GetComponent<MeshRenderer>().enabled = true;
+            pickupsToRemove[i].gameObject.GetComponent<SphereCollider>().enabled = true;
         }
 
-        for (int i = 0; i < pickupsToRemove.Count; i++)
-        {
-            CheckExtractedPickupSpawnpoints();
-            pickups.Add(Instantiate(pickupsToRemove[i], pickupSpawnpoints[random].transform));
-        }
-        pickupsToRemove.RemoveAll(gameObject => gameObject.GetType() == typeof(Pickup));
+        pickupsToRemove.Clear();
     }
 
 
