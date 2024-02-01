@@ -6,7 +6,7 @@ public class LaunchHover : Trap
 {
     public float travelSpeed;
     public float trapEnsnaringDuration;
-    [SerializeField] Transform throwDirection;
+    //[SerializeField] Transform throwDirection;
 
     protected override void Update()
     {
@@ -79,7 +79,8 @@ public class LaunchHover : Trap
         player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         player.transform.position = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
 
-        player.transform.LookAt(throwDirection);
+        //player.transform.LookAt(throwDirection);
+        player.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 
         yield return new WaitForSeconds(trapEnsnaringDuration);
 
@@ -94,7 +95,7 @@ public class LaunchHover : Trap
         enemyHover.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         enemyHover.transform.position = new Vector3(transform.position.x, enemyHover.transform.position.y, transform.position.z);
 
-        enemyHover.transform.LookAt(throwDirection);
+        enemyHover.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 
         yield return new WaitForSeconds(trapEnsnaringDuration);
 

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,17 +6,13 @@ using UnityEngine.UI;
 public class QuestionDialogUI : MonoBehaviour
 {
     public static QuestionDialogUI Instance { get; private set; }
-    private TextMeshProUGUI textMeshPro;
-    private Button yesBtn;
-    private Button noBtn;
+    [SerializeField] TextMeshProUGUI textMeshPro;
+    [SerializeField] Button yesBtn;
+    [SerializeField] Button noBtn;
 
     private void Awake()
     {
         Instance = this;
-
-        textMeshPro = transform.Find("Text").GetComponent<TextMeshProUGUI>();
-        yesBtn = transform.Find("YesBtn").GetComponent<Button>();
-        noBtn = transform.Find("NoBtn").GetComponent<Button>();
 
         Hide();
     }

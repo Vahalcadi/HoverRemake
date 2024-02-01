@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour
 {
@@ -9,12 +8,25 @@ public class GameMenu : MonoBehaviour
     [SerializeField] private GameObject pauseGameUI;
     [SerializeField] private GameObject playerControlsUI;
     [SerializeField] private GameObject customiseGameSettingsUI;
+    public string sceneName = "TestLevel";
+    public static GameMenu Instance;
+
+    private void Awake()
+    {
+        if (Instance != null)
+            Destroy(Instance.gameObject);
+        else
+            Instance = this;
+    }
 
     void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.F2))
+        {
             SwitchWithKeyTo(restartGameUI);
+            RestartGame();
+        }
 
         if (Input.GetKeyDown(KeyCode.F3))
             SwitchWithKeyTo(pauseGameUI);
@@ -44,6 +56,7 @@ public class GameMenu : MonoBehaviour
     {
         SwitchTo(inGameUI);
     }
+
     public void SwitchTo(GameObject _menu)
     {
 
@@ -51,6 +64,11 @@ public class GameMenu : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        if (inGameUI != null)
+        {
+            inGameUI.SetActive(true);
         }
 
         if (_menu != null)
@@ -68,8 +86,17 @@ public class GameMenu : MonoBehaviour
         }
     }
 
-    public void ExitGame()
+    public void RestartGame()
     {
-        Application.Quit();
+        QuestionDialogUI.Instance.ShowQuestion("This action will restart the game, are you sure?",
+            () =>
+            {
+                Time.timeScale = 1.0f;
+                SceneManager.LoadScene(sceneName);
+            },
+            () =>
+            {
+                SwitchWithKeyTo(inGameUI);
+            });
     }
 }

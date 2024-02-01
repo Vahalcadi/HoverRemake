@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -90,7 +91,17 @@ public class MenuScript : MonoBehaviour
     //exit game
     public void ExitGame()
     {
-        Application.Quit();
+        QuestionDialogUI.Instance.ShowQuestion("This action will close the application, are you sure?",
+            () =>
+            {
+                EditorApplication.isPaused = true;
+                //Application.Quit();
+            },
+            () =>
+            {
+                SwitchWithKeyTo(MainUI);
+            });
+        //Application.Quit();
     }
 
     //GoBack

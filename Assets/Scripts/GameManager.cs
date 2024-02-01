@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -56,11 +57,14 @@ public class GameManager : MonoBehaviour
         if (player.pickedUpFlags == 3)
         {
             player.score += flagChaser.flagsLeft * 2250;
+            Time.timeScale = 0;
+            RestartGame();
             Debug.Log($"You won. Score: {player.score}");
-            //EditorApplication.isPaused = true;            -temporarily disabled for build
         }
         if (flagChaser.flagsLeft == 0)
         {
+            Time.timeScale = 0;
+            RestartGame();
             Debug.Log($"You lost. Score: {player.score}");
             //EditorApplication.isPaused = false;           -temporarily disabled for build
         }
@@ -69,7 +73,7 @@ public class GameManager : MonoBehaviour
     #region Flags region
     private void InstantiatePlayerFlags()
     {
-        for(int i = 0; i < numberOfPlayerFlags; i++)
+        for (int i = 0; i < numberOfPlayerFlags; i++)
         {
             CheckExtractedNumber(ref extractedFlagSpawnpoints, ref flagSpawnPoints);
             playerFlags.Add(Instantiate(playerFlag, flagSpawnPoints[random].transform));
@@ -125,14 +129,14 @@ public class GameManager : MonoBehaviour
     #region pickups region
     private void InstantiatePickups()
     {
-        for(int i = 0; i < pickupPrefabs.Count; i++)
+        for (int i = 0; i < pickupPrefabs.Count; i++)
         {
             for (int j = 0; j < numberOfPickupsPerType; j++)
             {
                 CheckExtractedNumber(ref extractedPickupSpawnpoints, ref pickupSpawnpoints);
                 pickups.Add(Instantiate(pickupPrefabs[i], pickupSpawnpoints[random].transform));
             }
-        }   
+        }
     }
 
     private void CheckExtractedNumber(ref List<int> extractedSpawnpoints, ref List<GameObject> spawnPoints)
@@ -152,5 +156,29 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
         else
             Time.timeScale = 1;
+    }
+
+
+
+    public void RestartGame()
+    {
+        QuestionDialogUI.Instance.ShowQuestion($"You won. Score: {player.score}\nPlay again?",
+            () =>
+            {
+                Time.timeScale = 1.0f;
+                SceneManager.LoadScene(GameMenu.Instance.sceneName);
+            },
+            () =>
+            {
+                QuestionDialogUI.Instance.ShowQuestion("This will close the game, are you sure?",
+                    () =>
+                    {
+                        Application.Quit();
+                    },
+                    () =>
+                    {
+                        RestartGame();
+                    });
+            });
     }
 }
