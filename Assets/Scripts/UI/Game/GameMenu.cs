@@ -42,6 +42,7 @@ public class GameMenu : MonoBehaviour
     {
         if (_menu != null && _menu.activeSelf)
         {
+            QuestionDialogUI.Instance.Hide();
             _menu.SetActive(false);
 
             CheckForInGameUI();
@@ -63,11 +64,7 @@ public class GameMenu : MonoBehaviour
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
-
-        if (restartGameUI != null)
-        {
-            QuestionDialogUI.Instance.Hide();
-        }
+        
 
         if (inGameUI != null)
         {
@@ -83,11 +80,6 @@ public class GameMenu : MonoBehaviour
         {
             if (_menu == inGameUI)
                 GameManager.Instance.PauseGame(false);
-            else if (_menu == restartGameUI)
-            {
-                GameManager.Instance.PauseGame(true);
-                RestartGame();
-            }
             else
                 GameManager.Instance.PauseGame(true);
 
@@ -100,6 +92,7 @@ public class GameMenu : MonoBehaviour
             () =>
             {
                 Time.timeScale = 1.0f;
+                restartGameUI.SetActive(false);
                 SceneManager.LoadScene(sceneName);
             },
             () =>

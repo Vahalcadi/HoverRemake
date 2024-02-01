@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] NavigationFlagChaser flagChaser;
     [SerializeField] TextMeshProUGUI scoreText;
+    [NonSerialized] int playerScore;
 
     [Header("Flags region")]
     [SerializeField] private GameObject playerFlag;
@@ -62,12 +63,22 @@ public class GameManager : MonoBehaviour
         {
             player.score += flagChaser.flagsLeft * 2250;
             Time.timeScale = 0;
+
+            playerScore = player.score;
+
+            player.pickedUpFlags = 0;
+
             RestartGame();
             Debug.Log($"You won. Score: {player.score}");
         }
         if (flagChaser.flagsLeft == 0)
         {
             Time.timeScale = 0;
+
+            playerScore = player.score;
+
+            flagChaser.flagsLeft = 3;
+
             RestartGame();
             Debug.Log($"You lost. Score: {player.score}");
             //EditorApplication.isPaused = false;           -temporarily disabled for build
@@ -197,7 +208,8 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        QuestionDialogUI.Instance.ShowQuestion($"You won. Score: {player.score}\nPlay again?",
+
+        QuestionDialogUI.Instance.ShowQuestion($"You won. Score: {playerScore}\nPlay again?",
             () =>
             {
                 Time.timeScale = 1.0f;
