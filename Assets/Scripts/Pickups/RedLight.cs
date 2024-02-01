@@ -14,7 +14,7 @@ public class RedLight : Pickup
 
         if (durationTimer < 0)
         {
-            player.isSlowedDown = false;
+            player.GetComponent<Player>().isSlowedDown = false;
         }
     }
 
@@ -24,9 +24,9 @@ public class RedLight : Pickup
 
         base.UsePickup();
 
-        player.isSpedUp = false;
+        player.GetComponent<Player>().isSpedUp = false;
 
-        player.isSlowedDown = true;
+        player.GetComponent<Player>().isSlowedDown = true;
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -35,5 +35,7 @@ public class RedLight : Pickup
             return;
 
         base.OnTriggerEnter(other);
+
+        CanUsePickup();
     }
 }

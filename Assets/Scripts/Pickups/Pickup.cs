@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    public Player player;
+    public GameObject player;
 
     public enum PickupType
     {
@@ -22,21 +22,33 @@ public class Pickup : MonoBehaviour
     public float effectDuration;
     [NonSerialized] public float durationTimer;
 
+    private void Awake()
+    {
+        player = GameObject.Find("Player");
+    }
+
     protected virtual void Start()
     {
-        player = Player.Instance.gameObject.GetComponent<Player>();
+
     }
 
     protected virtual void Update()
     {
-        durationTimer -= Time.deltaTime; 
+
+        if (durationTimer > 0)
+        {
+            durationTimer -= Time.deltaTime;
+            Debug.Log(durationTimer);
+        }
+
     }
 
     public virtual bool CanUsePickup()
     {
-        if (durationTimer < 0)
+        if (durationTimer <= 0)
         {
             UsePickup();
+            Debug.Log("Used");
             durationTimer = effectDuration;
             return true;
         }
@@ -52,8 +64,6 @@ public class Pickup : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Player"))
             return;
-
-        CanUsePickup();
 
         GameManager.Instance.pickupsToRemove.Add(gameObject);
         GameManager.Instance.numberOfPickupsToRemove++;

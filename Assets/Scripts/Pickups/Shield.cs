@@ -13,7 +13,8 @@ public class Shield : Pickup
         base.Update();
 
         if (durationTimer < 0)
-            player.isShielded = false;
+            player.GetComponent<Player>().isShielded = false;
+            
     }
 
     public override void UsePickup()
@@ -23,7 +24,7 @@ public class Shield : Pickup
 
         base.UsePickup();
 
-        player.isShielded = true;
+        player.GetComponent<Player>().isShielded = true;
 
     }
 

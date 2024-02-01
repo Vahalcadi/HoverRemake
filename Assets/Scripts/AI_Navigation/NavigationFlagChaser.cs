@@ -13,7 +13,11 @@ public class NavigationFlagChaser : EntityHover
 
     private int random;
 
-
+    /**
+     * 
+     * Rolls the first destination
+     * 
+     * **/
     private void Start()
     {
         spawnpoints = GameManager.Instance.flagSpawnPoints;
@@ -25,6 +29,12 @@ public class NavigationFlagChaser : EntityHover
         SetChaserDestination();
     }
 
+    /**
+     * 
+     * The function will set a new destination when FlagChaser reaches the previous one
+     * 
+     * **/
+
     private void SetChaserDestination()
     {
         if (hasReachedDestination)
@@ -35,13 +45,16 @@ public class NavigationFlagChaser : EntityHover
 
         //agentFlagChaser.destination = spawnpoints[random].transform.position;
         agentFlagChaser.destination = new Vector3(spawnpoints[random].transform.position.x, agentFlagChaser.transform.position.y, spawnpoints[random].transform.position.z);
-
-        Debug.Log(hasReachedDestination);
     }
 
+    /**
+     * 
+     * 
+     * 
+     * **/
     private void CheckExtractedNumber()
     {
-        random = UnityEngine.Random.Range(0, spawnpoints.Count);
+        random = Random.Range(0, spawnpoints.Count);
         if (extractedSpawnpoints.Contains(random))
         {
             CheckExtractedNumber();

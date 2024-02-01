@@ -9,7 +9,7 @@ public class Wall : Pickup
 
     public override bool CanUsePickup()
     {
-        player.wallUses += 1;
+        player.GetComponent<Player>().wallUses += 1;
         Debug.Log("Wall picked up");
 
         return true;
@@ -21,5 +21,8 @@ public class Wall : Pickup
             return;
 
         base.OnTriggerEnter(other);
+
+        CanUsePickup();
+
     }
 }

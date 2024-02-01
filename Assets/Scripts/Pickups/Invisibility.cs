@@ -8,7 +8,7 @@ public class Invisibility : Pickup
     }
     public override bool CanUsePickup()
     {
-        player.invisibilityUses += 1;
+        player.GetComponent<Player>().invisibilityUses += 1;
         Debug.Log("Invis picked up");
 
         return true;
@@ -20,5 +20,7 @@ public class Invisibility : Pickup
             return;
 
         base.OnTriggerEnter(other);
+
+        CanUsePickup();
     }
 }

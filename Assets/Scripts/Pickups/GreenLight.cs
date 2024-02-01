@@ -16,7 +16,7 @@ public class GreenLight : Pickup
 
         if (durationTimer < 0)
         {
-            player.isSpedUp = false;
+            player.GetComponent<Player>().isSpedUp = false;
         }
     }
 
@@ -27,20 +27,25 @@ public class GreenLight : Pickup
 
     public override void UsePickup()
     {
-        Debug.Log("GreenLight picked up");
+        Debug.LogWarning("GreenLight picked up");
 
         base.UsePickup();
 
-        player.isSlowedDown = false;
+        player.GetComponent<Player>().isSlowedDown = false;
 
-        player.isSpedUp = true;      
+        player.GetComponent<Player>().isSpedUp = true;
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
+
         if (!other.gameObject.CompareTag("Player"))
             return;
 
+        Debug.Log("GreeenLight");
         base.OnTriggerEnter(other);
+
+        CanUsePickup();
+
     }
 }

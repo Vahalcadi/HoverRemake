@@ -11,7 +11,7 @@ public class Jump : Pickup
 
     public override bool CanUsePickup()
     {
-        player.jumpUses += 1;
+        player.GetComponent<Player>().jumpUses += 1;
         Debug.Log("Jump picked up");
 
         return true;
@@ -23,6 +23,8 @@ public class Jump : Pickup
             return;
 
         base.OnTriggerEnter(other);
+
+        CanUsePickup();
     }
 
 
