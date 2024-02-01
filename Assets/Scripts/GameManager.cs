@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> pickupSpawnpoints;
     [SerializeField] private List<GameObject> pickupPrefabs;
     [SerializeField] private List<GameObject> pickups = new();
+    [NonSerialized] public List<GameObject> pickupsToRemove = new();
+    [NonSerialized] public int numberOfPickupsToRemove;
     [SerializeField] private int numberOfPickupsPerType;
     [NonSerialized] public List<int> extractedPickupSpawnpoints = new();
 
@@ -68,6 +70,12 @@ public class GameManager : MonoBehaviour
             Debug.Log($"You lost. Score: {player.score}");
             //EditorApplication.isPaused = false;           -temporarily disabled for build
         }
+
+        if (numberOfPickupsToRemove == 4)
+        {
+            numberOfPickupsToRemove = 0;
+            ReplacePickups();
+        }
     }
 
     #region Flags region
@@ -75,7 +83,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfPlayerFlags; i++)
         {
-            CheckExtractedNumber(ref extractedFlagSpawnpoints, ref flagSpawnPoints);
+            CheckExtractedFlagSpawnpoints();
             playerFlags.Add(Instantiate(playerFlag, flagSpawnPoints[random].transform));
         }
     }
@@ -84,7 +92,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < flagChaser.flagsLeft; i++)
         {
-            CheckExtractedNumber(ref extractedFlagSpawnpoints, ref flagSpawnPoints);
+            CheckExtractedFlagSpawnpoints();
             enemyFlags.Add(Instantiate(enemyFlag, flagSpawnPoints[random].transform));
         }
     }
@@ -100,7 +108,7 @@ public class GameManager : MonoBehaviour
 
         enemyPickedUpFlags--;
 
-        CheckExtractedNumber(ref extractedFlagSpawnpoints, ref flagSpawnPoints);
+        CheckExtractedFlagSpawnpoints();
         enemyFlags.Add(Instantiate(enemyFlag, flagSpawnPoints[random].transform));
     }
 
@@ -115,13 +123,24 @@ public class GameManager : MonoBehaviour
 
         player.pickedUpFlags--;
 
-        CheckExtractedNumber(ref extractedFlagSpawnpoints, ref flagSpawnPoints);
+        CheckExtractedFlagSpawnpoints();
         playerFlags.Add(Instantiate(playerFlag, flagSpawnPoints[random].transform));
     }
 
     public void EnemyHasPickedUpFlag()
     {
         enemyPickedUpFlags++;
+    }
+
+    private void CheckExtractedFlagSpawnpoints()
+    {
+        random = UnityEngine.Random.Range(0, flagSpawnPoints.Count);
+        if (extractedFlagSpawnpoints.Contains(random))
+        {
+            CheckExtractedFlagSpawnpoints();
+        }
+        else
+            extractedFlagSpawnpoints.Add(random);
     }
 
     #endregion
@@ -133,20 +152,45 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < numberOfPickupsPerType; j++)
             {
-                CheckExtractedNumber(ref extractedPickupSpawnpoints, ref pickupSpawnpoints);
+                CheckExtractedPickupSpawnpoints();
                 pickups.Add(Instantiate(pickupPrefabs[i], pickupSpawnpoints[random].transform));
             }
         }
     }
 
-    private void CheckExtractedNumber(ref List<int> extractedSpawnpoints, ref List<GameObject> spawnPoints)
+    
+
+    private void ReplacePickups()
     {
-        random = UnityEngine.Random.Range(0, spawnPoints.Count);
-        if (extractedSpawnpoints.Contains(random))
+        int count = pickupsToRemove.Count;
+
+        for(int i = 0; i < count; i++)
         {
-            CheckExtractedNumber(ref extractedSpawnpoints, ref spawnPoints);
+            extractedPickupSpawnpoints.Remove(pickups.IndexOf(pickupsToRemove[i].transform.parent.gameObject));
+
+            GameObject obj = pickups[i];
+            Destroy(pickups[i]);
+            pickups.Remove(pickupsToRemove[i]);
         }
-        extractedSpawnpoints.Add(random);
+
+        for (int i = 0; i < pickupsToRemove.Count; i++)
+        {
+            CheckExtractedPickupSpawnpoints();
+            pickups.Add(Instantiate(pickupsToRemove[i], pickupSpawnpoints[random].transform));
+        }
+        pickupsToRemove.RemoveAll(gameObject => gameObject.GetType() == typeof(Pickup));
+    }
+
+
+    private void CheckExtractedPickupSpawnpoints()
+    {
+        random = UnityEngine.Random.Range(0, pickupSpawnpoints.Count);
+        if (extractedPickupSpawnpoints.Contains(random))
+        {
+            CheckExtractedPickupSpawnpoints();
+        }
+        else
+            extractedPickupSpawnpoints.Add(random);
     }
     #endregion
 
@@ -158,7 +202,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
     }
 
-
+    
 
     public void RestartGame()
     {

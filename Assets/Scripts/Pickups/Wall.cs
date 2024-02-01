@@ -21,9 +21,5 @@ public class Wall : Pickup
             return;
 
         base.OnTriggerEnter(other);
-
-        CanUsePickup();
     }
-
-
 }

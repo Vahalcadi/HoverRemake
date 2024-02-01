@@ -23,8 +23,6 @@ public class Jump : Pickup
             return;
 
         base.OnTriggerEnter(other);
-
-        CanUsePickup();
     }
 
 

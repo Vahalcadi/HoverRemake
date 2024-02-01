@@ -54,6 +54,11 @@ public class Pickup : MonoBehaviour
             return;
 
         CanUsePickup();
+
+        GameManager.Instance.pickupsToRemove.Add(gameObject);
+        GameManager.Instance.numberOfPickupsToRemove++;
+
+        gameObject.SetActive(false);
     }
 
 }

@@ -35,7 +35,5 @@ public class RedLight : Pickup
             return;
 
         base.OnTriggerEnter(other);
-
-        CanUsePickup();
     }
 }

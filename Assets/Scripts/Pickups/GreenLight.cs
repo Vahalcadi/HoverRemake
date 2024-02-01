@@ -42,7 +42,5 @@ public class GreenLight : Pickup
             return;
 
         base.OnTriggerEnter(other);
-
-        CanUsePickup(); 
     }
 }
