@@ -86,6 +86,11 @@ public class GameMenu : MonoBehaviour
         }
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
     public void RestartGame()
     {
         QuestionDialogUI.Instance.ShowQuestion("This action will restart the game, are you sure?",

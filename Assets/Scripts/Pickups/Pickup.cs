@@ -69,6 +69,7 @@ public class Pickup : MonoBehaviour
         GameManager.Instance.numberOfPickupsToRemove++;
 
         gameObject.GetComponent<MeshRenderer>().enabled = false;
+        gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
         gameObject.GetComponent<SphereCollider>().enabled = false;
     }
 

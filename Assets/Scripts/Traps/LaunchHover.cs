@@ -84,7 +84,7 @@ public class LaunchHover : Trap
 
         yield return new WaitForSeconds(trapEnsnaringDuration);
 
-        player.GetComponent<Rigidbody>().AddForce(player.transform.forward * travelSpeed, ForceMode.Impulse);
+        player.GetComponent<Rigidbody>().AddForce(player.transform.forward * travelSpeed * 30, ForceMode.Impulse);
     }
 
     private IEnumerator LaunchEnemy(GameObject enemyHover)

@@ -217,11 +217,7 @@ MonoBehaviour:
   pickupName: Random
   type: 7
   effectDuration: 6
-  Pickups:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  Pickups: []
 --- !u!95 &5888353191392736401
 Animator:
   serializedVersion: 5

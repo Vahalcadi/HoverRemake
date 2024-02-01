@@ -177,6 +177,7 @@ public class GameManager : MonoBehaviour
         for(int i = 0; i < pickupsToRemove.Count; i++)
         {
             pickupsToRemove[i].gameObject.GetComponent<MeshRenderer>().enabled = true;
+            pickupsToRemove[i].gameObject.GetComponentInChildren<SpriteRenderer>().enabled = true;
             pickupsToRemove[i].gameObject.GetComponent<SphereCollider>().enabled = true;
         }
 

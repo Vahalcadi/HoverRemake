@@ -211,4 +211,3 @@ MonoBehaviour:
   cooldown: 10
   travelSpeed: 20
   trapEnsnaringDuration: 0.5
-  throwDirection: {fileID: 0}

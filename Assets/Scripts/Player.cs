@@ -265,6 +265,12 @@ public class Player : MonoBehaviour
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance, groundCheck.position.z));
     }
 
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyBumper")) // Tag your bouncy object appropriately
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(-collision.GetContact(0).normal * 5, ForceMode.Impulse);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("EnemyFlag"))

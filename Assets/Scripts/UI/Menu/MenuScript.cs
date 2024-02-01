@@ -94,8 +94,7 @@ public class MenuScript : MonoBehaviour
         QuestionDialogUI.Instance.ShowQuestion("This action will close the application, are you sure?",
             () =>
             {
-                EditorApplication.isPaused = true;
-                //Application.Quit();
+                Application.Quit();
             },
             () =>
             {
