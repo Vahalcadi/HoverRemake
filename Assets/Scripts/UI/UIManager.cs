@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     [Header("Player References")]
     [SerializeField] Player player;
+    [SerializeField] Rigidbody rb;
 
     [Header("Enemy References")]
     [SerializeField] NavigationFlagChaser flagChaser;
@@ -29,6 +30,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image shieldBar;
     [SerializeField] Image redLightBar;
     [SerializeField] Image greenLightBar;
+    [SerializeField] Image directionLine;
+    float maxLength = 10f;
 
     [Header("Texts References")]
     [SerializeField] TextMeshProUGUI scoreText;
@@ -153,6 +156,14 @@ public class UIManager : MonoBehaviour
                 redFlag3.enabled = true;
                 break;
         }
+
+        //draw line based on player direction and speed
+        float length = Mathf.Min(rb.velocity.magnitude * rb.velocity.magnitude / 17, maxLength);
+        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+
+        RectTransform rectTransform = directionLine.rectTransform;
+        rectTransform.sizeDelta = new Vector2(length, rectTransform.sizeDelta.y);
+        rectTransform.rotation = Quaternion.Euler(0f, 0f, rb.rotation.x);
     }
 
     IEnumerator DecreaseFillAmount(Image image, bool isActive, int coroutineIndex)
