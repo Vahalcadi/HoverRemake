@@ -52866,7 +52866,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1457500856}
-  rb: {fileID: 1457500855}
   flagChaser: {fileID: 661514905}
   redFlag1: {fileID: 757681264}
   redFlag2: {fileID: 49794708}
@@ -52881,7 +52880,6 @@ MonoBehaviour:
   shieldBar: {fileID: 1025287287}
   redLightBar: {fileID: 535416550}
   greenLightBar: {fileID: 1820689789}
-  directionLine: {fileID: 2045176199}
   scoreText: {fileID: 1352247402}
   jumpText: {fileID: 1146968827}
   wallText: {fileID: 1157340261}
@@ -128723,7 +128721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2045176197
 RectTransform:
   m_ObjectHideFlags: 0
